@@ -71,7 +71,7 @@ var viewport = null;
 									defaults : {
 										columnWidth : 1,
 										margin : '15px 80px 0 50px',
-										labelWidth : 60,
+										labelWidth : 80,
 										labelAlign : 'right',
 										cls : 'form_item_tra'
 									},

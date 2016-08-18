@@ -2,20 +2,25 @@ body{
 	background-color: transparent !important;
 	background: transparent !important;
 }
-.x-form-item-label-default,.x-form-text-default {
-    color: #FFFFFF !important;
+.x-form-text-default {
+    /*color: #FFFFFF !important;*/
     /*padding: 1px 3px 2px;*/
-    /*font: normal 12px/17px tahoma, arial, verdana, sans-serif !important;*/
+    font: normal 12px/17px tahoma, arial, verdana, sans-serif !important;
     /*min-height: 20px;*/
     font-size: 13px;
 	font-style: initial;
 	font-stretch: narrower;
-	text-align: right;
+	/*text-align: right;*/
 	font-family: "微软雅黑" "arial black" "新宋体";
-    font-weight: 900;
     /*background-color: transparent !important;*/
 }
-
+.x-form-item-label-default{
+	color: #FFFFFF !important;
+	font-size: 15px;
+	font-style: initial;
+	font-stretch: narrower;
+	font-family: "微软雅黑" "arial black" "新宋体";
+}
 .web_cfg{
 	margin: 0 0 ;
 	padding: 0 0;
@@ -109,9 +114,4 @@ body{
 	text-align: center;
 	font-family: "微软雅黑" "arial black" "新宋体";
 	color: #FFFFFF;
-}
-
-.form_item {
-	color: #A1311F;
-	text-align: right;
 }
