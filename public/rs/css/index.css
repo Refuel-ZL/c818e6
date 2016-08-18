@@ -62,7 +62,9 @@ div.x-border-layout-ct {
 }
 
 .header-west-panel {
-	margin-left: 60px;
+	top: 10px ! important;
+	height: 40px ! important;
+	left: 50px !important;
 	background-position: 100% 100%;
 	background-image: url('../img/logo.png');
 	background-repeat: no-repeat;
@@ -81,18 +83,25 @@ div.x-border-layout-ct {
 	background-image: url('../img/login_menu1.png');
 	background-size: 83px 30px;
 }
+.x-btn-inner-default-small {
+	color: #FFFFFF !important;
+	/*font-weight:900 !important;*/
+	font-size: 19px;
+	/*-webkit-text-stroke: 1px #a3a3a3;*/
+	letter-spacing: 0.09em;
+}
 
 .main-login-menu2 {
-	background-image: url('../img/login_menu2.png') !important;
+	background-image: url('../img/login_menu2.png') ;
 	background-size: 83px 30px !important;
-	background-position: 0 0;
-	background-repeat: no-repeat;
 }
 
-.main-login-menu2-base {
+/*.main-login-menu2-base {
 	background: transparent;
+}*/
+a{
+	background-color: transparent !important;
 }
-
 .main-login-menu3 {
 	border-bottom-right-radius: 20px;
 	background-image: url('../img/login_menu3.png');

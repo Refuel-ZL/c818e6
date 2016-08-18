@@ -63,7 +63,7 @@ function conf() {
 				if (tmp && tmp.length > 0) {
 					rs = [];
 					for ( var i = 0; i < tmp.length; i++) {
-						rs.push(tmp[i]);
+						rs.push(tmp[i].replace('\r',''));
 					}
 				}
 			}
@@ -92,7 +92,6 @@ function conf() {
 					"admin"));
 			str = util.format('%s\n%s', str, util.format("%s %s", "password",
 					"123"));
-			str = util.format('%s\n', str);
 			fs.writeFileSync(bakpath, str, {
 				encoding : 'utf-8',
 				flag : 'w'
@@ -115,7 +114,7 @@ function conf() {
 				if (tmp && tmp.length > 0) {
 					rs = [];
 					for ( var i = 0; i < tmp.length; i++) {
-						rs.push(tmp[i]);
+						rs.push(tmp[i].replace('\r',''));
 					}
 				}
 			}
@@ -174,22 +173,17 @@ function conf() {
 		},
 		loadDefaultSerialPortConf : function(port) {
 			var cfg = {};
-			if (port) {
+			if (port>=0 && port<7) {
 				var lines = this._readDefaultFile();
 				if (lines) {
-					for ( var i = 0; i < lines.length; i++) {
-						var line = lines[i];
-						if (line != null) {
-							if (line.indexOf(port) == 0) {
-								var tmp = line.split('\t');
-								cfg["port"] = tmp[0];
-								cfg["baud_rate"] = tmp[1];// 波特率
-								cfg["parity"] = tmp[2];// 校验位
-								cfg["data_bits"] = tmp[3];// 数据位
-								cfg["stop_bits"] = tmp[4];// 停止位
-								break;
-							}
-						}
+					var line = lines[port];
+					if (line != null) {
+						var tmp = line.split('\t');
+						cfg["port"] = tmp[0];
+						cfg["baud_rate"] = tmp[1];// 波特率
+						cfg["parity"] = tmp[2];// 校验位
+						cfg["data_bits"] = tmp[3];// 数据位
+						cfg["stop_bits"] = tmp[4];// 停止位
 					}
 				}
 			}
@@ -249,22 +243,17 @@ function conf() {
 		},
 		loadSerialPortConf : function(port) {
 			var cfg = {};
-			if (port) {
+			if (port>=0 && port<7) {
 				var lines = this._readFile();
 				if (lines) {
-					for ( var i = 0; i < lines.length; i++) {
-						var line = lines[i];
-						if (line != null) {
-							if (line.indexOf(port) == 0) {
-								var tmp = line.split('\t');
-								cfg["port"] = tmp[0];
-								cfg["baud_rate"] = tmp[1];// 波特率
-								cfg["parity"] = tmp[2];// 校验位
-								cfg["data_bits"] = tmp[3];// 数据位
-								cfg["stop_bits"] = tmp[4];// 停止位
-								break;
-							}
-						}
+					var line = lines[port];
+					if (line != null) {
+						var tmp = line.split('\t');
+						cfg["port"] = tmp[0];
+						cfg["baud_rate"] = tmp[1];// 波特率
+						cfg["parity"] = tmp[2];// 校验位
+						cfg["data_bits"] = tmp[3];// 数据位
+						cfg["stop_bits"] = tmp[4];// 停止位
 					}
 				}
 			}
@@ -317,8 +306,18 @@ function conf() {
 				var tmp = this.loadAll();
 				if (tmp && tmp.serials) {
 					var p = parseInt(port);
-					if (index >= 0 && index < 7) {
+					if (index >= 0 && index < 6) {
 						var cf = tmp.serials[index];
+						for(var i=0;i<6;i++){
+							if(i==index){
+								continue;
+							}else{
+								if(tmp.serials[i].port==p){//端口重复
+									status=-2;
+									return status;
+								}
+							}
+						}
 						cf["port"] = p;
 						cf["baud_rate"] = cfg.baud_rate;
 						cf["parity"] = cfg.parity;
@@ -333,12 +332,12 @@ function conf() {
 		loadAll : function() {
 			var cfg = {};
 			cfg["ip"] = this.loadIpConf();
-			cfg["serials"] = [ this.loadSerialPortConf(27011),
-					this.loadSerialPortConf(27012),
-					this.loadSerialPortConf(27013),
-					this.loadSerialPortConf(27014),
-					this.loadSerialPortConf(27015),
-					this.loadSerialPortConf(27016) ];
+			cfg["serials"] = [ this.loadSerialPortConf(0),
+					this.loadSerialPortConf(1),
+					this.loadSerialPortConf(2),
+					this.loadSerialPortConf(3),
+					this.loadSerialPortConf(4),
+					this.loadSerialPortConf(5) ];
 			cfg["user"] = this.loadUserConf();
 			return cfg;
 		},
@@ -378,7 +377,6 @@ function conf() {
 							"username", cfg.user.username));
 					str = util.format('%s\n%s', str, util.format("%s %s",
 							"password", cfg.user.password));
-					str = util.format('%s\n', str);
 					fs.writeFileSync(fpath, str, {
 						encoding : 'utf-8',
 						flag : 'w'

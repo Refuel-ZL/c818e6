@@ -1,8 +1,15 @@
 .x-form-item-label-default,.x-form-text-default {
-    color: #000000 !important;
+    color: #FFFFFF !important;
     /*padding: 1px 3px 2px;*/
-    font: normal 12px/17px tahoma, arial, verdana, sans-serif !important;
+    /*font: normal 14px/17px tahoma, arial, verdana, sans-serif !important;*/
+     font-size: 13px;
+	font-style: initial;
+	font-stretch: narrower;
+	text-align: right;
+	font-family: "微软雅黑" "arial black" "新宋体";
+    font-weight: 900;
     /*min-height: 20px;*/
+   font-weight: 900;
     /*background-color: transparent !important;*/
 }
 .web_cfg{
