@@ -64,7 +64,7 @@ var viewport = null;
 											});
 								},
 								xtype : 'form',
-								formid : Ext.String.format("{0}", cfg.index),
+								formid : Ext.String.format("{0}", cfg.sindex),
 								id : Ext.String.format("serialport_{0}",
 										cfg.exName),
 								layout : 'column',
@@ -82,7 +82,7 @@ var viewport = null;
 								items : items,
 								listeners : {
 									afterrender : function(p, opt) {
-										this.initFormData(cfg.index);
+										this.initFormData(cfg.sindex);
 									}
 								},
 								buttons : [
@@ -90,23 +90,25 @@ var viewport = null;
 										'->',
 										{
 											text : '立即生效',
+											id : 'form_port_submit',
 											cls : 'sui-btn btn-bordered btn-xlarge btn-success',
 											handler : function() {
 												if (cfg.update
 														&& Ext
 																.isFunction(cfg.update)) {
 													try {
+														var vals = this.up(
+																'form')
+																.getForm()
+																.getValues();
 														cfg
 																.update([
+																		vals['port'],
+																		vals,
 																		this
-																				.up('form').formid,
-																		this
-																				.up(
-																						'form')
-																				.getForm()
-																				.getValues(),
-																		this
-																				.up('form').id ]);
+																				.up('form').id,
+																		parseInt(this
+																				.up('form').formid) ]);
 													} catch (e) {
 														console.log(e);
 													}
@@ -121,7 +123,7 @@ var viewport = null;
 												this.up('form').getForm()
 														.reset();
 												this.up('form').initFormData(
-														cfg.index);
+														cfg.sindex);
 											}
 										},
 										'->',
@@ -149,127 +151,139 @@ var viewport = null;
 						}
 						return rt;
 					};
-					var formItems = [ {
-						fieldLabel : '端口',
-						name : 'port',
-						allowBlank : false,
-						xtype : 'textfield'
-					}, {
-						fieldLabel : '波特率',
-						name : 'baud_rate',
-						allowBlank : false,
-						xtype : 'combo',
-						queryMode : 'local',
-						displayField : 'name',
-						editable : false,
-						valueField : 'rate',
-						store : Ext.create('Ext.data.Store', {
-							fields : [ 'rate', 'name' ],
-							data : [ {
-								"rate" : "9600",
-								"name" : "9600"
+					var formItems = [
+							{
+								fieldLabel : '端口',
+								name : 'port',
+								id : 'c818e6_port',
+								allowBlank : false,
+								xtype : 'textfield',
+								validator : function(val) {
+									var b = Ext.isNumeric(val)
+											&& parseInt(val) > 0
+											&& parseInt(val) < 65536;
+									var obj = Ext.getCmp('form_port_submit');
+									if (obj) {
+										obj.setDisabled(!b);
+									}
+									return b ? true : '端口值无效';
+								}
 							}, {
-								"rate" : "300",
-								"name" : "300"
+								fieldLabel : '波特率',
+								name : 'baud_rate',
+								allowBlank : false,
+								xtype : 'combo',
+								queryMode : 'local',
+								displayField : 'name',
+								editable : false,
+								valueField : 'rate',
+								store : Ext.create('Ext.data.Store', {
+									fields : [ 'rate', 'name' ],
+									data : [ {
+										"rate" : "9600",
+										"name" : "9600"
+									}, {
+										"rate" : "300",
+										"name" : "300"
+									}, {
+										"rate" : "600",
+										"name" : "600"
+									}, {
+										"rate" : "1200",
+										"name" : "1200"
+									}, {
+										"rate" : "1800",
+										"name" : "1800"
+									}, {
+										"rate" : "2400",
+										"name" : "2400"
+									}, {
+										"rate" : "4800",
+										"name" : "4800"
+									}, {
+										"rate" : "19200",
+										"name" : "19200"
+									}, {
+										"rate" : "38400",
+										"name" : "38400"
+									}, {
+										"rate" : "57600",
+										"name" : "57600"
+									}, {
+										"rate" : "115200",
+										"name" : "115200"
+									} ]
+								})
 							}, {
-								"rate" : "600",
-								"name" : "600"
+								fieldLabel : '数据位',
+								name : 'data_bits',
+								allowBlank : false,
+								xtype : 'combo',
+								queryMode : 'local',
+								editable : false,
+								displayField : 'name',
+								valueField : 'db',
+								store : Ext.create('Ext.data.Store', {
+									fields : [ 'db', 'name' ],
+									data : [ {
+										"db" : "5",
+										"name" : "5"
+									}, {
+										"db" : "6",
+										"name" : "6"
+									}, {
+										"db" : "7",
+										"name" : "7"
+									}, {
+										"db" : "8",
+										"name" : "8"
+									} ]
+								})
 							}, {
-								"rate" : "1200",
-								"name" : "1200"
+								fieldLabel : '校验方式',
+								name : 'parity',
+								allowBlank : false,
+								xtype : 'combo',
+								queryMode : 'local',
+								editable : false,
+								displayField : 'name',
+								valueField : 'parity',
+								store : Ext.create('Ext.data.Store', {
+									fields : [ 'parity', 'name' ],
+									data : [ {
+										"parity" : "n",
+										"name" : "none"
+									}, {
+										"parity" : "o",
+										"name" : "ODD"
+									}, {
+										"parity" : "e",
+										"name" : "EVEN"
+									}, {
+										"parity" : "s",
+										"name" : "SPACE"
+									} ]
+								})
 							}, {
-								"rate" : "1800",
-								"name" : "1800"
-							}, {
-								"rate" : "2400",
-								"name" : "2400"
-							}, {
-								"rate" : "4800",
-								"name" : "4800"
-							}, {
-								"rate" : "19200",
-								"name" : "19200"
-							}, {
-								"rate" : "38400",
-								"name" : "38400"
-							}, {
-								"rate" : "57600",
-								"name" : "57600"
-							}, {
-								"rate" : "115200",
-								"name" : "115200"
-							} ]
-						})
-					}, {
-						fieldLabel : '数据位',
-						name : 'data_bits',
-						allowBlank : false,
-						xtype : 'combo',
-						queryMode : 'local',
-						editable : false,
-						displayField : 'name',
-						valueField : 'db',
-						store : Ext.create('Ext.data.Store', {
-							fields : [ 'db', 'name' ],
-							data : [ {
-								"db" : "5",
-								"name" : "5"
-							}, {
-								"db" : "6",
-								"name" : "6"
-							}, {
-								"db" : "7",
-								"name" : "7"
-							}, {
-								"db" : "8",
-								"name" : "8"
-							} ]
-						})
-					}, {
-						fieldLabel : '校验方式',
-						name : 'parity',
-						allowBlank : false,
-						xtype : 'combo',
-						queryMode : 'local',
-						editable : false,
-						displayField : 'name',
-						valueField : 'parity',
-						store : Ext.create('Ext.data.Store', {
-							fields : [ 'parity', 'name' ],
-							data : [ {
-								"parity" : "n",
-								"name" : "none"
-							}, {
-								"parity" : "o",
-								"name" : "ODD"
-							}, {
-								"parity" : "e",
-								"name" : "EVEN"
-							}, {
-								"parity" : "s",
-								"name" : "SPACE"
-							} ]
-						})
-					}, {
-						fieldLabel : '停止位',
-						name : 'stop_bits',
-						allowBlank : false,
-						xtype : 'combo',
-						editable : false,
-						queryMode : 'local',
-						displayField : 'name',
-						valueField : 'sb',
-						store : Ext.create('Ext.data.Store', {
-							fields : [ 'sb', 'name' ],
-							data : [ {
-								"sb" : "1",
-								"name" : "1"
-							}, {
-								"sb" : "2",
-								"name" : "2"
-							} ]
-						})
-					} ];
+								fieldLabel : '停止位',
+								name : 'stop_bits',
+								allowBlank : false,
+								xtype : 'combo',
+								editable : false,
+								queryMode : 'local',
+								displayField : 'name',
+								valueField : 'sb',
+								store : Ext.create('Ext.data.Store', {
+									fields : [ 'sb', 'name' ],
+									data : [ {
+										"sb" : "1",
+										"name" : "1"
+									}, {
+										"sb" : "2",
+										"name" : "2"
+									} ]
+								})
+							} ];
 					var viewItem = [];
 					var page = localStorage['id'];
 					if (page) {
@@ -310,7 +324,7 @@ var viewport = null;
 							},
 							update : function(params) {
 								if (params && Ext.isArray(params)
-										&& params.length == 3) {
+										&& params.length == 4) {
 									var index = params[0], vals = params[1];
 									Ext.Ajax
 											.request({
@@ -320,6 +334,7 @@ var viewport = null;
 												waitMsg : '正在提交信息...',
 												params : {
 													id : 2,
+													index : params[3],
 													port : parseInt(index),
 													data : Ext.util.JSON
 															.encode(vals)
@@ -328,14 +343,29 @@ var viewport = null;
 														opts) {
 													var jsonobject = Ext.util.JSON
 															.decode(response.responseText);
-													if (jsonobject.status == -1) {
-														if (parent.Ext
-																&& parent.Ext.loginview && base) {
-															parent.Ext
-																	.loginview(
-																			0,
-																			base.update,
-																			params);
+													if (jsonobject.status == -1
+															|| jsonobject.status == -2) {
+														if (jsonobject.status == -1) {
+															if (parent.Ext
+																	&& parent.Ext.loginview
+																	&& base) {
+																parent.Ext
+																		.loginview(
+																				0,
+																				base.update,
+																				params);
+															}
+														} else {
+															var obj = Ext
+																	.getCmp('form_port_submit');
+															if (obj) {
+																obj
+																		.setDisabled(true);
+															}
+															obj = Ext.getCmp('c818e6_port');
+															if (obj) {
+																obj.markInvalid('端口号重复!');
+															}
 														}
 													} else {
 														Ext.Msg
@@ -392,6 +422,7 @@ var viewport = null;
 						case '2': {
 							var tmp = {};
 							Ext.apply(tmp, base);
+							tmp['sindex'] = parseInt(page) - 2;
 							tmp['exName'] = 'a';
 							tmp['index'] = 27011;
 							tmp['title'] = '串口（232-1）参数配置';
@@ -404,6 +435,7 @@ var viewport = null;
 						case '3': {
 							var tmp = {};
 							Ext.apply(tmp, base);
+							tmp['sindex'] = parseInt(page) - 2;
 							tmp['exName'] = 'b';
 							tmp['index'] = 27012;
 							tmp['title'] = '串口（232-2）参数配置';
@@ -416,6 +448,7 @@ var viewport = null;
 						case '4': {
 							var tmp = {};
 							Ext.apply(tmp, base);
+							tmp['sindex'] = parseInt(page) - 2;
 							tmp['exName'] = 'c';
 							tmp['index'] = 27013;
 							tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',
@@ -429,6 +462,7 @@ var viewport = null;
 						case '5': {
 							var tmp = {};
 							Ext.apply(tmp, base);
+							tmp['sindex'] = parseInt(page) - 2;
 							tmp['exName'] = 'd';
 							tmp['index'] = 27014;
 							tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',
@@ -442,6 +476,7 @@ var viewport = null;
 						case '6': {
 							var tmp = {};
 							Ext.apply(tmp, base);
+							tmp['sindex'] = parseInt(page) - 2;
 							tmp['exName'] = 'e';
 							tmp['index'] = 27015;
 							tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',
@@ -455,6 +490,7 @@ var viewport = null;
 						case '7': {
 							var tmp = {};
 							Ext.apply(tmp, base);
+							tmp['sindex'] = parseInt(page) - 2;
 							tmp['exName'] = 'f';
 							tmp['index'] = 27016;
 							tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',

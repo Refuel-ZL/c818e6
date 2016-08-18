@@ -159,6 +159,16 @@ function requestFullScreen() {
 		de.mozRequestFullScreen();
 	} else if (de.webkitRequestFullScreen) {
 		de.webkitRequestFullScreen();
+	} else if (typeof window.ActiveXObject != "undefined") {
+		try {
+			// for IE
+			var wscript = new ActiveXObject("WScript.Shell");
+			if (wscript != null) {
+				wscript.SendKeys("{F11}");
+			}
+		} catch (e) {
+
+		}
 	}
 }
 
@@ -170,6 +180,16 @@ function exitFullscreen() {
 		de.mozCancelFullScreen();
 	} else if (de.webkitCancelFullScreen) {
 		de.webkitCancelFullScreen();
+	} else if (typeof window.ActiveXObject != "undefined") {
+		// for IE
+		try {
+			var wscript = new ActiveXObject("WScript.Shell");
+			if (wscript != null) {
+				wscript.SendKeys("{F11}");
+			}
+		} catch (e) {
+
+		}
 	}
 }
 

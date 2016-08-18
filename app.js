@@ -80,13 +80,14 @@ app.post('/load', function(req, res, next) {
 			cfg = conf.loadIpConf();
 			break;
 		case actionType.LOAD_SPORT:
-			cfg = conf.loadSerialPortConf(req.body.port);
+			if(req.body.port){
+				cfg = conf.loadSerialPortConf(parseInt(req.body.port));
+			}
 			break;
 		default:
 			break;
 		}
 	}
-
 	res.json(cfg);
 });
 app.post('/loadDefault', function(req, res, next) {
@@ -105,7 +106,9 @@ app.post('/loadDefault', function(req, res, next) {
 			cfg = conf.loadDefaultIpConf();
 			break;
 		case actionType.LOAD_SPORT:
-			cfg = conf.loadDefaultSerialPortConf(req.body.port);
+			if(req.body.port){
+				cfg = conf.loadDefaultSerialPortConf(parseInt(req.body.port));
+			}
 			break;
 		default:
 			break;
@@ -157,7 +160,9 @@ app.post('/save', function(req, res, next) {
 					status = conf.updateIpConf(cfg);
 					break;
 				case actionType.MODIFY_SPORT:
-					status = conf.updateSerialPortConf(req.body.index,req.body.port, cfg);
+					if(req.body.index){
+						status = conf.updateSerialPortConf(parseInt(req.body.index),req.body.port, cfg);
+					}
 					break;
 				default:
 					break;
