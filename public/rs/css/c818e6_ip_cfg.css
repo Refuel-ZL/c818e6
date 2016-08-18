@@ -3,10 +3,16 @@ body{
 	background: transparent !important;
 }
 .x-form-item-label-default,.x-form-text-default {
-    color: #000000 !important;
+    color: #FFFFFF !important;
     /*padding: 1px 3px 2px;*/
-    font: normal 12px/17px tahoma, arial, verdana, sans-serif !important;
+    /*font: normal 12px/17px tahoma, arial, verdana, sans-serif !important;*/
     /*min-height: 20px;*/
+    font-size: 13px;
+	font-style: initial;
+	font-stretch: narrower;
+	text-align: right;
+	font-family: "微软雅黑" "arial black" "新宋体";
+    font-weight: 900;
     /*background-color: transparent !important;*/
 }
 
@@ -42,11 +48,11 @@ body{
 }
 .x-panel-default{/*表单高度*/
 	/*height: 375px !important;*/ 
-	height: 420px !important; 
+	height: 480px !important; 
 }
 .x-toolbar-footer{ /*表单位置*/
 	background: transparent !important;
-	margin: 50px 0px 0px 0px !important;
+	margin: 30px 0px 0px 0px !important;
 }
 .btn-success {
 	color: #ffffff !important;
@@ -96,7 +102,7 @@ body{
 }
 
 .form_label { /*表单头字体*/
-	margin-top: 30px !important;
+	margin-top: 50px !important;
 	font-size: 24px;
 	font-style: initial;
 	font-stretch: narrower;
