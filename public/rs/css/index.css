@@ -1,0 +1,514 @@
+body.x-border-layout-ct,
+div.x-border-layout-ct {
+	background-color: transparent !important;
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.web {
+	background-image: url(../img/background.jpg) !important;
+	background-repeat: no-repeat !important;
+	overflow: auto;
+	minWidth: 1000px;
+}
+
+.x-panel-body-default {
+	background: transparent !important;
+	border-color: #99bce8;
+	color: #000;
+	font-size: 12px;
+	font-weight: normal;
+	font-family: tahoma, arial, verdana, sans-serif;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.x-viewport> .x-body {
+	background-image: url(../img/background.jpg);
+	background-repeat: no-repeat;
+	background-positon: center center;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+}
+
+.head_left {
+	background-image: url(../img/C818E6_02.png);
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+.head_centre {
+	background-image: url(../img/C818E6_03.png);
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+.head_right {
+	background-image: url(../img/C818E6_04.png);
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+.header {
+	background-color: rgba(0, 20, 152, 0.5);
+	min-width: 1000px;
+	width: 1000px;
+}
+
+.header-west-panel {
+	margin-left: 60px;
+	background-position: 100% 100%;
+	background-image: url('../img/logo.png');
+	background-repeat: no-repeat;
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+.header-east-panel {
+	/*width: 255px;*/
+	padding-bottom: 30px !important;
+	background-repeat: no-repeat;
+}
+
+.main-login-menu1 {
+	border-bottom-left-radius: 20px;
+	background-image: url('../img/login_menu1.png');
+	background-size: 83px 30px;
+}
+
+.main-login-menu2 {
+	background-image: url('../img/login_menu2.png') !important;
+	background-size: 83px 30px !important;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+
+.main-login-menu2-base {
+	background: transparent;
+}
+
+.main-login-menu3 {
+	border-bottom-right-radius: 20px;
+	background-image: url('../img/login_menu3.png');
+	background-size: 83px 30px;
+}
+
+.nobackground {
+	background: transparent;
+	background-color: none !important;
+}
+
+.panel_north {
+	border-bottom: 1px #BBBBBB solid;
+}
+
+.panel_center {
+	background: transparent !important;
+}
+
+.box {
+	border: 1px solid #ddd;
+	box-shadow: 0px 0px 5px;
+	height: 100%;
+	width: 100%;
+}
+
+.box.list {
+	height: 100%;
+	width: 100%;
+}
+
+.content_left {
+	width: 500px;
+	background-image: url(../img/C818E6_05.png);
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+.content_east {
+	width: 500px;
+	background-image: url(../img/C818E6_07.png);
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+.below_west {
+	width: 500px;
+	background-image: url(../img/C818E6_08.png);
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+.below_center {
+	margin: 0 0;
+	padding: 0 0;
+	background-image: url(../img/C818E6_09.png);
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+.below_east {
+	width: 500px;
+	background-image: url(../img/C818E6_10.png);
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+
+/*中间区域*/
+
+#main_content .ifrmae_border {
+	border-top-width: 0px;
+	border-left-width: 0px;
+	border-bottom-width: 0px;
+	border-right-width: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+
+/**北部logo图片**/
+
+#prologo a {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 300px;
+	height: 60px;
+	background-image: url('../img/C818E6.png');
+	background-repeat: no-repeat;
+	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+#prologo {
+	margin-top: 30px;
+}
+
+
+/** 南部页码**/
+
+#allpage {
+	width: 375px;
+	height: 88px;
+	margin: auto;
+}
+
+#page {
+	width: 295px;
+	height: 88px;
+	overflow: hidden;
+	float: left;
+}
+
+#page ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: 100000px;
+}
+
+#page ul li {
+	margin: 0;
+	padding: 0;
+	width: 55px;
+	height: 88px;
+	display: block;
+	float: left;
+	margin-right: 5px;
+}
+
+.a1 {
+	float: left;
+	width: 20px;
+	display: block;
+	height: 37px;
+	font-weight: bold;
+	line-height: 40px;
+	text-align: center;
+	margin-top: 20px;
+	background: url(../img/direction.png);
+}
+
+#Left {
+	background-position: -0px -36px;
+	margin-right: 10px;
+}
+
+#Right {
+	background-position: -125px 0px;
+	margin-left: 10px;
+}
+
+#page ul li a {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	height: 100%;
+	width: 100%;
+	background-image: url(../img/off.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+
+#page ul li a.active {
+	background-image: url(../img/on.png);
+}
+
+#page ul li a:hover {
+	background-image: url(../img/on.png);
+}
+
+#page a div {
+	width: 40px;
+	height: 60px;
+	padding-top: 20px;
+	overflow: hidden;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#page a div span {
+	font-weight: bold;
+	font-family: "KaiTi,Microsoft YaHei";
+	font-size: 16px;
+	color: #FFFFFF;
+}
+
+.no_Selection {
+	-o-user-select: none;
+	/* Opera */
+	-moz-user-select: none;
+	/*火狐*/
+	-webkit-user-select: none;
+	/*webkit浏览器*/
+	-ms-user-select: none;
+	/*IE10*/
+	-khtml-user-select: none;
+	/*早期浏览器*/
+}
+
+
+/********************************/
+
+.title2,
+.title1 {
+	font-size: 20px;
+	font-style: initial;
+	font-stretch: narrower;
+	text-align: center;
+	font-family: "微软雅黑" "arial black" "新宋体";
+	color: #FFFFFF;
+	width: 410px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	display: block;
+}
+
+.title1 {
+	/*padding: 0px 75px 0px 145px;*/
+}
+
+.title2 {
+	/*padding: 0px 145px 0px 75px;*/
+}
+
+.cpu {
+	width: 185px;
+	height: 160px;
+	display: block;
+	float: left;
+	margin: 30px 10px 10px 10px;
+	vertical-align: middle;
+}
+
+.memory {
+	width: 100%;
+	height: 100%;
+	display: block;
+	float: left;
+	margin: 30px 10px 10px 10px;
+	vertical-align: middle;
+}
+
+.allcpu,
+.allmemory {
+	height: 300px;
+	width: 100%;
+	vertical-align: middle;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.clearfix {
+	padding: 70px 0px 0px 90px;
+	transform: perspective(400px) rotateY(20deg);
+	/*background-color: #0E5284;*/
+}
+
+.memory_box {
+	padding: 70px 90px 0px 0px;
+	transform: perspective(400px) rotateY(-20deg);
+	/*background-color: #0E5284;*/
+}
+
+
+/***加载框****/
+
+#loader_container {
+	text-align: center;
+	position: absolute;
+	top: 40%;
+	width: 100%;
+	left: 0;
+}
+
+#loader {
+	font-family: Tahoma, Helvetica;
+	font-size: 14px;
+	color: #ffffff;
+	background-color: transparent !important;
+	padding: 10px 0 16px 0;
+	margin: 0 auto;
+	display: block;
+	width: 230px;
+	/*border: 1px solid #5a667b;*/
+	text-align: left;
+	z-index: 2;
+}
+
+#loader_bg {
+	/*background-color: #000000;*/
+	background-image: url(../img/loading.gif);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	position: relative;
+	/*top: 10px;*/
+	margin-bottom: 10px;
+	/*left: 8px;*/
+	height: 60px;
+	width: 213px;
+	font-size: 1px;
+}
+
+.login-windows {
+	background-image: url(../img/login_backgroud.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-size: 100% 100%;
+	width: 494px;
+	height: 273px;
+	position: absolute;
+	margin: -136px 0 0 -247px;
+	top: 50%;
+	left: 50%;
+	z-index: 20000;
+	border-radius: 22px;
+}
+.textfiled_username{
+	height:30px;
+	margin-bottom: 5px;
+}
+.textfiled_password{
+	height:30px;
+	margin-top: 5px;
+}
+.login-button-base{
+	background: transparent;
+}
+.login-button{
+	padding-left:20px;
+	background-image: url(../img/login_button.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-size: 70px 70px;
+	margin-left: 20px;
+	border : none;
+}
+.login-button-over{
+	padding-left:20px;
+	background-image: url(../img/login_button.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;
+	background-size: 68px 68px;
+	margin-left: 20px;
+	border : none;
+}
+.login-button-focus{
+	padding-left:20px;
+	background-image: url(../img/login_button.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-size: 70px 70px;
+	margin-left: 20px;
+	border : none;
+}
+
+.changepwd-button{
+	padding-left:20px;
+	background-image: url(../img/alter.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-size: 70px 70px;
+	margin-left: 20px;
+	border : none;
+}
+.changepwd-button-over{
+	padding-left:20px;
+	background-image: url(../img/alter.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;
+	background-size: 68px 68px;
+	margin-left: 20px;
+	border : none;
+}
+.changepwd-button-focus{
+	padding-left:20px;
+	background-image: url(../img/lalter.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-size: 70px 70px;
+	margin-left: 20px;
+	border : none;
+}
+.login-form {
+	background: transparent !important;
+}
+
+.main-menu3-icon{
+	
+}
+
+.main-menu2-icon{
+	
+}
+
+.main-menu1-loginicon{
+	background-image: url(../img/user_gray.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+
+.main-menu1-changepwdicon{
+	background-image: url(../img/user_edit.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}

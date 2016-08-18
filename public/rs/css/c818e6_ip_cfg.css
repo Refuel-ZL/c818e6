@@ -1,0 +1,111 @@
+body{
+	background-color: transparent !important;
+	background: transparent !important;
+}
+.x-form-item-label-default,.x-form-text-default {
+    color: #000000 !important;
+    /*padding: 1px 3px 2px;*/
+    font: normal 12px/17px tahoma, arial, verdana, sans-serif !important;
+    /*min-height: 20px;*/
+    /*background-color: transparent !important;*/
+}
+
+.web_cfg{
+	margin: 0 0 ;
+	padding: 0 0;
+  -moz-user-select:none;/*火狐*/
+  -webkit-user-select:none;/*webkit浏览器*/
+  -ms-user-select:none;/*IE10*/
+  -khtml-user-select:none;/*早期浏览器*/
+  user-select:none;
+}
+.ip_config {
+	width: 500px;
+	background-image: url(../img/C818E6_06.png);
+	background-repeat: no-repeat;
+	background-positon: 0, 0, 100%, 100%;
+	background-size: 100% 100%;
+	margin: 68px auto auto auto ;
+}
+
+.form_item_tra {
+	min-width: 400px;
+}
+
+.x-panel-body-default {
+	background: transparent !important;
+	color: #000;
+	font-size: 12px;
+	font-weight: normal;
+	font-family: tahoma, arial, verdana, sans-serif;
+	border: none !important;
+}
+.x-panel-default{/*表单高度*/
+	/*height: 375px !important;*/ 
+	height: 420px !important; 
+}
+.x-toolbar-footer{ /*表单位置*/
+	background: transparent !important;
+	margin: 50px 0px 0px 0px !important;
+}
+.btn-success {
+	color: #ffffff !important;
+	background-color: #43cd6e !important;
+	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+	border: 1px solid #34c360 !important;
+}
+
+.btn-info {
+	color: #ffffff !important;
+	background-color: #5bc0de !important;
+	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+	border: 1px solid #46b8da !important;
+}
+
+.btn-warning {
+	color: #ffffff !important;
+	background-color: #fac603 !important;
+	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+	border: 1px solid #e1b203 !important;
+}
+
+.btn-xlarge {
+	padding: 4px 20px;
+	line-height: 22px;
+	font-size: 14px;
+}
+
+.sui-btn {
+	display: inline-block;
+	padding: 2px 14px;
+	box-sizing: border-box;
+	margin-bottom: 0;
+	font-size: 12px;
+	line-height: 18px;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	color: #333333;
+	background-color: #eeeeee;
+	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+	border: 1px solid #e1e1e1;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	background-image: none !important;
+}
+
+.form_label { /*表单头字体*/
+	margin-top: 30px !important;
+	font-size: 24px;
+	font-style: initial;
+	font-stretch: narrower;
+	text-align: center;
+	font-family: "微软雅黑" "arial black" "新宋体";
+	color: #FFFFFF;
+}
+
+.form_item {
+	color: #A1311F;
+	text-align: right;
+}
