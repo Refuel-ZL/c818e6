@@ -1,9 +1,9 @@
 var viewport = null;
 (function() {
-	Ext
-			.onReady(function() {
+	Ext.onReady(function() {
 				initExtJS();
 				if (viewport == null) {
+					var _ip='';
 					var buildipaddr = function(cfg) {
 						var rt = null;
 						if (cfg) {
@@ -38,8 +38,7 @@ var viewport = null;
 								border : false,
 								items : [ {
 									initFormData : function() {
-										Ext.Ajax
-												.request({
+										Ext.Ajax.request({
 													url : '/load',
 													method : 'POST',
 													waitTitle : '请稍等...',
@@ -47,18 +46,15 @@ var viewport = null;
 													params : {
 														id : 4
 													},
-													success : function(
-															response, opts) {
-														var jsonobject = Ext.util.JSON
-																.decode(response.responseText);
+													success : function(response, opts) {
+														var jsonobject = Ext.util.JSON.decode(response.responseText);
+														console.log(jsonobject.address);
+														_ip=jsonobject.address;
+														console.log(_ip);
 														if (jsonobject) {
-															var obj = Ext
-																	.getCmp("ip_config");
+															var obj = Ext.getCmp("ip_config");
 															if (obj) {
-																obj
-																		.getForm()
-																		.setValues(
-																				jsonobject);
+																obj.getForm().setValues(jsonobject);
 															}
 														}
 													}
@@ -82,32 +78,21 @@ var viewport = null;
 											this.initFormData();
 										}
 									},
-									buttons : [
-											'->',
-											'->',
+									buttons : ['->','->',
 											{
 												text : '立即生效',
 												id : 'form_button_save',
 												cls : 'sui-btn btn-bordered btn-xlarge btn-success',
 												handler : function() {
 													if (cfg.update
-															&& Ext
-																	.isFunction(cfg.update)) {
+															&& Ext.isFunction(cfg.update)) {
 														try {
-															var form = this.up(
-																	"form")
-																	.getForm();
+															var form = this.up("form").getForm();
 															if (form.isValid()) {
-																cfg
-																		.update(form
-																				.getValues());
+																cfg.update(form.getValues());
 															} else {
-																Ext.Msg
-																		.alert(
-																				"非法提交",
-																				"请按要求填写!!!");
+																Ext.Msg.alert("非法提交","请按要求填写!!!");
 															}
-
 														} catch (e) {
 															console.log(e);
 														}
@@ -120,10 +105,8 @@ var viewport = null;
 												text : '放弃修改',
 												cls : 'sui-btn btn-bordered btn-xlarge btn-info',
 												handler : function() {
-													this.up('form').getForm()
-															.reset();
-													this.up('form')
-															.initFormData();
+													this.up('form').getForm().reset();
+													this.up('form').initFormData();
 												}
 											},
 											'->',
@@ -131,15 +114,9 @@ var viewport = null;
 												text : '恢复默认',
 												cls : 'sui-btn btn-bordered btn-xlarge btn-warning',
 												handler : function() {
-													if (cfg.loadDefault
-															&& Ext
-																	.isFunction(cfg.loadDefault)) {
+													if (cfg.loadDefault&& Ext.isFunction(cfg.loadDefault)) {
 														try {
-															cfg
-																	.loadDefault(this
-																			.up(
-																					"form")
-																			.getForm());
+															cfg.loadDefault(this.up("form").getForm());
 														} catch (e) {
 															console.log(e);
 														}
@@ -159,50 +136,46 @@ var viewport = null;
 								allowBlank : false,
 								enableKeyEvents : true,
 								validator : function(v) {
-									var b = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/
-											.test(v);
+									
+									var b = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(v);
 									if (b) {
-										Ext.Ajax
-												.request({
-													url : '/validate',
-													method : 'POST',
-													waitTitle : '请稍等...',
-													waitMsg : '正在加载信息...',
-													params : {
-														address : v
-													},
-													success : function(
-															response, opts) {
-														var jsonobject = Ext.util.JSON
-																.decode(response.responseText);
-														if (jsonobject) {
-															var obj = Ext
-																	.getCmp("form_ip_address");
-															var c = Ext
-																	.getCmp('form_button_save');
-															if (c) {
-																c
-																		.setDisabled(jsonobject.status == 1);
-															}
-															if (obj) {
-																if (jsonobject.status == 1) {
-																	obj
-																			.markInvalid([ {
-																				field : 'address',
-																				message : 'IP地址冲突,已经被使用.'
-																			} ]);
-																} else {
-																	obj
-																			.clearInvalid();
+										if(_ip!=v){
+											Ext.Ajax.request({
+														url : '/validate',
+														method : 'POST',
+														waitTitle : '请稍等...',
+														waitMsg : '正在加载信息...',
+														params : {
+															address : v
+														},
+														success : function(response, opts) {
+															var jsonobject = Ext.util.JSON.decode(response.responseText);
+															if (jsonobject) {
+																var obj = Ext.getCmp("form_ip_address");
+																var c = Ext.getCmp('form_button_save');
+																if (c) {
+																	c.setDisabled(jsonobject.status == 1);
+																}
+																if (obj) {
+																	if (jsonobject.status == 1) {
+																		obj.markInvalid([{field : 'address',message : 'IP地址冲突,已经被使用.'}]);
+																	} else {
+																		obj.clearInvalid();
+																	}
 																}
 															}
 														}
-													}
 												});
-
-									}
+											}else{
+												var obj = Ext.getCmp("form_ip_address");
+												if(obj){
+													console.log("相同： "+_ip+" "+v);
+													obj.clearInvalid();
+												}
+											}
+										}
 									return b;
-								}
+}
 							}, {
 								fieldLabel : '子网掩码',
 								name : 'netmask',
@@ -224,8 +197,7 @@ var viewport = null;
 					var base = {
 						items : formItems,
 						update : function(vals) {
-							Ext.Ajax
-									.request({
+							Ext.Ajax.request({
 										url : '/save',
 										method : 'POST',
 										waitTitle : '请稍等...',
@@ -235,22 +207,14 @@ var viewport = null;
 											data : Ext.util.JSON.encode(vals)
 										},
 										success : function(response, opts) {
-											var jsonobject = Ext.util.JSON
-													.decode(response.responseText);
+											var jsonobject = Ext.util.JSON.decode(response.responseText);
 											if (jsonobject.status == -1) {
 												if (parent.Ext
 														&& parent.Ext.loginview) {
 													parent.Ext.loginview(0,base.update,vals);
 												}
 											} else {
-												Ext.Msg
-														.alert(
-																'信息',
-																Ext.String
-																		.format(
-																				'保存{0}',
-																				(jsonobject && jsonobject.status == 1) ? "成功"
-																						: "失败"));
+												Ext.Msg.alert('信息',Ext.String.format('保存{0}',(jsonobject && jsonobject.status == 1) ? "成功": "失败"));
 											}
 										},
 										failure : function() {
@@ -270,8 +234,7 @@ var viewport = null;
 										id : 4
 									},
 									success : function(response, opts) {
-										var jsonobject = Ext.util.JSON
-												.decode(response.responseText);
+										var jsonobject = Ext.util.JSON.decode(response.responseText);
 										if (jsonobject) {
 											form.setValues(jsonobject);
 										}
