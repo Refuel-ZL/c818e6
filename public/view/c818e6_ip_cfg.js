@@ -4,6 +4,7 @@ var viewport = null;
 				initExtJS();
 				if (viewport == null) {
 					var _ip='';
+					var IP_='';
 					var buildipaddr = function(cfg) {
 						var rt = null;
 						if (cfg) {
@@ -48,7 +49,6 @@ var viewport = null;
 													},
 													success : function(response, opts) {
 														var jsonobject = Ext.util.JSON.decode(response.responseText);
-														console.log(jsonobject.address);
 														_ip=jsonobject.address;
 														console.log(_ip);
 														if (jsonobject) {
@@ -135,18 +135,19 @@ var viewport = null;
 								name : 'address',
 								allowBlank : false,
 								enableKeyEvents : true,
-								validator : function(v) {
-									
-									var b = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(v);
+								listeners : 
+									{'blur':function(v) {
+									var a=v.lastValue;
+									var b = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(a);
 									if (b) {
-										if(_ip!=v){
+										if(_ip!=a){
 											Ext.Ajax.request({
 														url : '/validate',
 														method : 'POST',
 														waitTitle : '请稍等...',
 														waitMsg : '正在加载信息...',
 														params : {
-															address : v
+															address : a
 														},
 														success : function(response, opts) {
 															var jsonobject = Ext.util.JSON.decode(response.responseText);
@@ -159,6 +160,7 @@ var viewport = null;
 																if (obj) {
 																	if (jsonobject.status == 1) {
 																		obj.markInvalid([{field : 'address',message : 'IP地址冲突,已经被使用.'}]);
+																		console.log(a+" IP地址,已经被使用.");
 																	} else {
 																		obj.clearInvalid();
 																	}
@@ -169,13 +171,12 @@ var viewport = null;
 											}else{
 												var obj = Ext.getCmp("form_ip_address");
 												if(obj){
-													console.log("相同： "+_ip+" "+v);
 													obj.clearInvalid();
 												}
 											}
 										}
 									return b;
-}
+}}
 							}, {
 								fieldLabel : '子网掩码',
 								name : 'netmask',
@@ -214,7 +215,16 @@ var viewport = null;
 													parent.Ext.loginview(0,base.update,vals);
 												}
 											} else {
-												Ext.Msg.alert('信息',Ext.String.format('保存{0}',(jsonobject && jsonobject.status == 1) ? "成功": "失败"));
+												if(jsonobject && jsonobject.status == 1){
+													var url = "http://"+vals.address+":"+window.location.port+"/";
+													Ext.Msg.wait('跳转网页: '+url,'提示 5S后'); 
+													setTimeout(function () {
+													          top.location.href=url;
+													       },5000);
+													
+												}else{
+													Ext.Msg.alert('信息','失败');
+												}
 											}
 										},
 										failure : function() {
