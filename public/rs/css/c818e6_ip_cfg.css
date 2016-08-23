@@ -39,10 +39,6 @@ body{
 	margin: 68px auto auto auto ;
 }
 
-.form_item_tra {
-	min-width: 400px;
-}
-
 .x-panel-body-default {
 	background: transparent !important;
 	color: #000;
@@ -60,54 +56,51 @@ body{
 	margin: 30px 0px 0px 0px !important;
 }
 .btn-success {
-	color: #ffffff !important;
+	font-weight: 900 !important;
 	background-color: #43cd6e !important;
 	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
 	border: 1px solid #34c360 !important;
 }
 
 .btn-info {
-	color: #ffffff !important;
-	background-color: #5bc0de !important;
+	background-color: #3498DB !important;
 	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
-	border: 1px solid #46b8da !important;
+	border: 1px solid #3498DB !important;
 }
 
 .btn-warning {
-	color: #ffffff !important;
-	background-color: #fac603 !important;
+	background-color: #E74C3C !important;
 	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
-	border: 1px solid #e1b203 !important;
+	border: 1px solid #E74C3C !important;
 }
 
 .btn-xlarge {
-	padding: 4px 20px;
-	line-height: 22px;
-	font-size: 14px;
-}
-
-.sui-btn {
-	display: inline-block;
-	padding: 2px 14px;
-	box-sizing: border-box;
-	margin-bottom: 0;
-	font-size: 12px;
-	line-height: 18px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-	color: #333333;
-	background-color: #eeeeee;
-	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+	line-height: 32px;
+	height: 32px;
+	min-width: 90px !important;
 	border: 1px solid #e1e1e1;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	border-radius: 2px;
+	border-radius: 5px;
+}
+.btn-xlarge span{
+	font-size: 16px !important;
+	font-weight: 900 !important;
+}
+.sui-btn {
+	display: inline-block;
+	box-sizing: border-box;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	color: #ffffff !important;
+	background-color: #eeeeee;
+	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
 	background-image: none !important;
 }
 
 .form_label { /*表单头字体*/
-	margin-top: 50px !important;
+	margin:50px 50px 0px 70px !important;
 	font-size: 24px;
 	font-style: initial;
 	font-stretch: narrower;

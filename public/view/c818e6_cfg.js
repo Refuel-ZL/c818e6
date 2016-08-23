@@ -73,7 +73,6 @@ var viewport = null;
 								defaults : {
 									columnWidth : 1,
 									margin : '10px 80px 0 50px',
-									labelWidth : 80,
 									labelAlign : 'right'
 								},
 								flex : 1,

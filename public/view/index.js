@@ -1,7 +1,6 @@
 var viewport = null; // 代表浏览器窗口的整个区域
 (function() {
-	Ext
-			.onReady(function() {
+	Ext.onReady(function() {
 				initExtJS();
 				if (viewport == null) { // 初始化主页
 					// vcenter中的翻页按钮
@@ -10,13 +9,13 @@ var viewport = null; // 代表浏览器窗口的整个区域
 							+ '<a id="Left" class="a1" href="javascript:void(0)" onmousedown="moveLeft()"></a>'
 							+ '<div id="page">'
 							+ '<ul>'
-							+ '<li><a href="#" class="active"><div><span>ip</br>设置</span></div></a></li>'
-							+ '<li><a href="#"><div><span>串口</br>1</span></div></a></li>'
-							+ '<li><a href="#"><div><span>串口</br>2</span></div></a></li>'
-							+ '<li><a href="#"><div><span>串口</br>3</span></div></a></li>'
-							+ '<li><a href="#"><div><span>串口</br>4</span></div></a></li>'
-							+ '<li><a href="#"><div><span>串口</br>5</span></div></a></li>'
-							+ '<li><a href="#"><div><span>串口</br>6</span></div></a></li>'
+							+ '<li><a href="#" class="active" alt="ip设置" title="ip设置"><div><span>ip</br>设置</span></div></a></li>'
+							+ '<li><a href="#" alt="串口(232-1)" title="串口(232-1)"><div><span>串口</br>1</span></div></a></li>'
+							+ '<li><a href="#" alt="串口(232-2)" title="串口(232-2)"><div><span>串口</br>2</span></div></a></li>'
+							+ '<li><a href="#" alt="串口(485-1)" title="串口(485-1)"><div><span>串口</br>3</span></div></a></li>'
+							+ '<li><a href="#" alt="串口(485-2)" title="串口(485-2)"><div><span>串口</br>4</span></div></a></li>'
+							+ '<li><a href="#" alt="串口(485-3)" title="串口(485-3)"><div><span>串口</br>5</span></div></a></li>'
+							+ '<li><a href="#" alt="串口(485-4)" title="串口(485-4)"><div><span>串口</br>6</span></div></a></li>'
 							+ '</ul>'
 							+ '</div>'
 							+ '<a  id="Right" class="a1" href="javascript:void(0)" onmousedown="moveRight()"></a>'
@@ -41,7 +40,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 										items : [
 												{
 													region : 'west',
-													width : 500,
+													width : 425,
 													xtype : 'panel',
 													border : false,
 													layout : {
@@ -57,7 +56,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 													cls : 'head_centre',
 												}, {
 													region : 'east',
-													width : 500,
+													width : 425,
 													border : false,
 													xtype : 'panel',
 													layout : {
@@ -84,7 +83,6 @@ var viewport = null; // 代表浏览器窗口的整个区域
 										items : [
 												{
 													region : 'west',
-
 													xtype : 'panel',
 													border : false,
 													layout : {
@@ -223,8 +221,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 												cls : 'main-login-menu1',
 												handler : function(p) {
 													Ext.loginstatus = Ext.loginstatus || 0;
-													Ext
-															.loginview(Ext.loginstatus);
+													Ext.loginview(Ext.loginstatus);
 												}
 											},
 											{
@@ -289,8 +286,12 @@ var viewport = null; // 代表浏览器窗口的整个区域
 											} ]
 								} ]
 					};
-					viewport = Ext.create('Ext.container.Viewport', { // 创建border布局
+					viewport = Ext.create('Ext.panel.Panel', { // 创建border布局
 						layout : 'border',
+						width:Ext.get("fullviewport").getWidth(),
+						height:Ext.get("fullviewport").getHeight(),
+						border : false,
+						renderTo:'fullviewport',
 						items : [ center, north ],
 						listeners : {
 							resize : function(p, width, height, oldWidth,
@@ -334,8 +335,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 								emptyText : '请输入用户名'
 							};
 						}
-						var win = Ext
-								.create(
+						var win = Ext.create(
 										'Ext.window.Window',
 										{
 											width : 494,
@@ -690,6 +690,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 						// animation: Highcharts.svg, // don't animate in old IE
 						animation : false,
 						renderTo : 'cpu1',
+						 type: 'area',
 						// backgroundColor: 'rgba(0,0,0,0)',//背景透明
 						backgroundColor : { // 渐变背景
 							linearGradient : [ 0, 0, 0, 200 ],
@@ -797,8 +798,8 @@ var viewport = null; // 代表浏览器窗口的整个区域
 						renderTo : 'memory',
 						backgroundColor : 'rgba(0,0,0,0)',// 背景透明
 						plotBackgroundColor : null,
-						plotBorderWidth : null,
-						plotShadow : false,
+						plotBorderWidth : 0,
+						plotShadow : true,
 					},
 					title : {
 						text : '能耗监控'
@@ -848,8 +849,8 @@ var viewport = null; // 代表浏览器窗口的整个区域
 											+ '</b>';
 								},
 
-							},
-							padding : 20,
+							}
+							//padding : 20,
 						}
 					},
 					legend : { // 图列
@@ -857,8 +858,8 @@ var viewport = null; // 代表浏览器窗口的整个区域
 						verticalAlign : 'top', // 垂直标的目标地位
 						x : 0, // 间隔x轴的间隔
 						y : 0, // 间隔Y轴的间隔
-						// layout: 'vertical',
-						backgroundColor : '#65C0E4',
+//						 layout: 'vertical',
+						backgroundColor : '#0164B7',
 						itemHoverStyle : {
 							color : '#000000'
 						},
@@ -870,19 +871,19 @@ var viewport = null; // 代表浏览器窗口的整个区域
 					},
 					series : [ {
 						type : 'pie',
+						//innerSize:'50%',
 						data : [ {
 							name : '空闲内存',
-							y : 8,
+							y : 1,
 							color : '#0059A7'
 						}, {
 							name : '使用内存',
-							y : 1,
+							y : 0,
 							color : 'red'
 						} ]
 					} ]
 				};
-				$(document)
-						.ready(
+				$(document).ready(
 								function() {
 									var cpu1 = new Highcharts.Chart(lineoptions);
 									lineoptions.chart.renderTo = "cpu2";

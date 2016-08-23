@@ -4,7 +4,6 @@ var viewport = null;
 				initExtJS();
 				if (viewport == null) {
 					var _ip='';
-					var IP_='';
 					var buildipaddr = function(cfg) {
 						var rt = null;
 						if (cfg) {
@@ -67,9 +66,7 @@ var viewport = null;
 									defaults : {
 										columnWidth : 1,
 										margin : '15px 80px 0 50px',
-										labelWidth : 80,
 										labelAlign : 'right',
-										cls : 'form_item_tra'
 									},
 									defaultType : 'textfield',
 									items : items,
@@ -80,7 +77,7 @@ var viewport = null;
 									},
 									buttons : ['->','->',
 											{
-												text : '立即生效',
+												text : '立即提交',
 												id : 'form_button_save',
 												cls : 'sui-btn btn-bordered btn-xlarge btn-success',
 												handler : function() {
@@ -210,8 +207,7 @@ var viewport = null;
 										success : function(response, opts) {
 											var jsonobject = Ext.util.JSON.decode(response.responseText);
 											if (jsonobject.status == -1) {
-												if (parent.Ext
-														&& parent.Ext.loginview) {
+												if (parent.Ext&& parent.Ext.loginview) {
 													parent.Ext.loginview(0,base.update,vals);
 												}
 											} else {

@@ -4,12 +4,17 @@ div.x-border-layout-ct {
 	margin: 0 0;
 	padding: 0 0;
 }
-
-.web {
+body{
 	background-image: url(../img/background.jpg) !important;
+	height: 100%;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+.web {
+	//background-image: url(../img/background.jpg) !important;
 	background-repeat: no-repeat !important;
-	overflow: auto;
-	minWidth: 1000px;
+	overflow: auto !important;
 }
 
 .x-panel-body-default {
@@ -63,8 +68,8 @@ div.x-border-layout-ct {
 
 .header-west-panel {
 	top: 10px ! important;
-	height: 40px ! important;
-	left: 50px !important;
+	height: 35px ! important;
+	left: 30px !important;
 	background-position: 100% 100%;
 	background-image: url('../img/logo.png');
 	background-repeat: no-repeat;
@@ -86,7 +91,7 @@ div.x-border-layout-ct {
 .x-btn-inner-default-small {
 	color: #FFFFFF !important;
 	/*font-weight:900 !important;*/
-	font-size: 19px;
+	font-size: 16px;
 	/*-webkit-text-stroke: 1px #a3a3a3;*/
 	letter-spacing: 0.09em;
 }
@@ -95,10 +100,6 @@ div.x-border-layout-ct {
 	background-image: url('../img/login_menu2.png') ;
 	background-size: 83px 30px !important;
 }
-
-/*.main-login-menu2-base {
-	background: transparent;
-}*/
 a{
 	background-color: transparent !important;
 }
@@ -107,6 +108,10 @@ a{
 	background-image: url('../img/login_menu3.png');
 	background-size: 83px 30px;
 }
+
+/*.main-login-menu2-base {
+	background: transparent;
+}*/
 
 .nobackground {
 	background: transparent;
@@ -134,7 +139,7 @@ a{
 }
 
 .content_left {
-	width: 500px;
+	width: 425px;
 	background-image: url(../img/C818E6_05.png);
 	background-repeat: no-repeat;
 	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
@@ -143,7 +148,7 @@ a{
 }
 
 .content_east {
-	width: 500px;
+	width: 425px;
 	background-image: url(../img/C818E6_07.png);
 	background-repeat: no-repeat;
 	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
@@ -152,7 +157,7 @@ a{
 }
 
 .below_west {
-	width: 500px;
+	width: 425px;
 	background-image: url(../img/C818E6_08.png);
 	background-repeat: no-repeat;
 	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
@@ -171,7 +176,7 @@ a{
 }
 
 .below_east {
-	width: 500px;
+	width: 425px;
 	background-image: url(../img/C818E6_10.png);
 	background-repeat: no-repeat;
 	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
@@ -215,7 +220,7 @@ a{
 /** 南部页码**/
 
 #allpage {
-	width: 375px;
+	width: 355px;
 	height: 88px;
 	margin: auto;
 }
@@ -323,44 +328,34 @@ a{
 	font-style: initial;
 	font-stretch: narrower;
 	text-align: center;
-	font-family: "微软雅黑" "arial black" "新宋体";
+	font-family: "KaiTi,Microsoft YaHei" !important;
 	color: #FFFFFF;
-	width: 410px;
+	width: 280px;
 	height: 20px;
 	line-height: 20px;
 	text-align: center;
 	display: block;
 }
-
-.title1 {
-	/*padding: 0px 75px 0px 145px;*/
-}
-
-.title2 {
-	/*padding: 0px 145px 0px 75px;*/
-}
-
 .cpu {
-	width: 185px;
+	width: 280px;
 	height: 160px;
 	display: block;
-	float: left;
-	margin: 30px 10px 10px 10px;
+	margin-top: 30px;
+	/*margin: 30px 10px 10px 10px;*/
 	vertical-align: middle;
 }
 
 .memory {
 	width: 100%;
-	height: 100%;
+	height: 380px;
 	display: block;
-	float: left;
-	margin: 30px 10px 10px 10px;
+	margin-top: 30px;
 	vertical-align: middle;
 }
 
 .allcpu,
 .allmemory {
-	height: 300px;
+	height: 450px;
 	width: 100%;
 	vertical-align: middle;
 	text-align: center;
@@ -368,18 +363,23 @@ a{
 }
 
 .clearfix {
-	padding: 70px 0px 0px 90px;
-	transform: perspective(400px) rotateY(20deg);
-	/*background-color: #0E5284;*/
+	width: '100%';
+	margin-top: 80px ;
+	margin-left: 100px;
+	margin-right: 45px;
+	transform: perspective(450px) rotateY(25deg);
 }
 
 .memory_box {
-	padding: 70px 90px 0px 0px;
-	transform: perspective(400px) rotateY(-20deg);
-	/*background-color: #0E5284;*/
+	width: '100%';
+	margin-top: 80px ;
+	margin-right: 100px;
+	margin-left: 45px;
+	transform: perspective(450px) rotateY(-20deg);
 }
-
-
+/*.highcharts-series-0{
+	transform: perspective(450px) rotateY(-20deg);
+}*/
 /***加载框****/
 
 #loader_container {
@@ -520,4 +520,7 @@ a{
 	background-image: url(../img/user_edit.png);
 	background-repeat: no-repeat;
 	background-position: 0 0;
+}
+.x-btn-button span{
+	font-weight: 900 !important;
 }

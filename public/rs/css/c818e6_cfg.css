@@ -60,88 +60,58 @@
 	background: transparent !important;
 	margin: 40px 0px 0px 0px !important;
 }
-.sui-btn.btn-bordered.btn-success {
-	border: 1px solid #34c360;
-	color: #34c360;
-}
-
-.sui-btn.btn-bordered.btn-info {
-	border: 1px solid #46b8da;
-	color: #46b8da;
-}
-
-.sui-btn.btn-bordered.btn-warning {
-	border: 1px solid #e1b203;
-	color: #e1b203;
-}
-
-.sui-btn.btn-bordered {
-	background-color: transparent;
-	border: 1px solid #8c8c8c;
-	color: #8c8c8c;
-}
-
 .btn-success {
-	color: #ffffff !important;
 	background-color: #43cd6e !important;
 	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
-	border: 1px solid #34c360 !important;
-	/*margin: 0px 0px 100px 10px;*/
+	border: 1px solid #43cd6e !important;
 }
 
 .btn-info {
-	color: #ffffff !important;
-	background-color: #5bc0de !important;
+	background-color: #3498DB !important;
 	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
-	border: 1px solid #46b8da !important;
+	border: 1px solid #3498DB !important;
 	/*margin: 0px 0px 100px 10px;*/
 }
 
 .btn-warning {
-	color: #ffffff !important;
-	background-color: #fac603 !important;
+	background-color: #E74C3C !important;
 	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
-	border: 1px solid #e1b203 !important;
-	/*margin: 0px 30px 100px 10px;*/
+	border: 1px solid #E74C3C !important;
 }
 
 .btn-xlarge {
-	padding: 4px 20px;
-	line-height: 22px;
-	font-size: 14px;
-}
-
-.sui-btn {
-	display: inline-block;
-	padding: 2px 14px;
-	box-sizing: border-box;
-	margin-bottom: 0;
-	font-size: 12px;
-	line-height: 18px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-	color: #333333;
-	background-color: #eeeeee;
-	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+	line-height: 32px;
+	height: 32px;
+	min-width: 90px !important;
 	border: 1px solid #e1e1e1;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	border-radius: 2px;
+	border-radius: 5px;
+}
+
+.sui-btn {
+	
+	display: inline-block;
+	box-sizing: border-box;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	color: #ffffff !important;
+	background-color: #eeeeee;
+	filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
 	background-image: none !important;
+}
+.btn-xlarge span{
+	font-size: 16px !important;
+	font-weight: 900 !important;
 }
 
 .form_label { /*表单头字体*/
-	margin-top: 50px !important;
+	margin:50px 50px 0px 70px !important;
 	font-size: 24px;
 	font-style: initial;
 	font-stretch: narrower;
 	text-align: center;
 	font-family: "微软雅黑" "arial black" "新宋体";
 	color: #FFFFFF;
-}
-
-.form_item {
-	color: #A1311F;
-	text-align: right;
 }
