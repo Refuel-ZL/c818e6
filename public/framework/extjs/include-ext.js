@@ -152,35 +152,34 @@ function unmask() {
 }
 
 function requestFullScreen() {
-	var de = document.documentElement;
-	if (de.requestFullscreen) {
-		de.requestFullscreen();
-	} else if (de.mozRequestFullScreen) {
-		de.mozRequestFullScreen();
-	} else if (de.webkitRequestFullScreen) {
-		de.webkitRequestFullScreen();
-	} else if (typeof window.ActiveXObject != "undefined") {
-		try {
-			// for IE
-			var wscript = new ActiveXObject("WScript.Shell");
-			if (wscript != null) {
-				wscript.SendKeys("{F11}");
-			}
-		} catch (e) {
-
-		}
-	}
+	 var el = document.documentElement,
+        rfs = el.requestFullscreen || el.mozRequestFullScreen || el.webkitRequestFullScreen || el.msRequestFullscreen,
+        wscript;
+    if(typeof rfs != "undefined" && rfs) {
+        rfs.call(el);
+        return;
+    }
+    if(typeof window.ActiveXObject != "undefined") {
+        wscript = new ActiveXObject("WScript.Shell");
+        if(wscript) {
+            wscript.SendKeys("{F11}");
+        }
+    }
 }
 
 function exitFullscreen() {
 	var de = document;
 	if (de.exitFullscreen) {
 		de.exitFullscreen();
+	}else if(de.msExitFullscreen) {
+		de.msExitFullscreen();
 	} else if (de.mozCancelFullScreen) {
 		de.mozCancelFullScreen();
 	} else if (de.webkitCancelFullScreen) {
 		de.webkitCancelFullScreen();
-	} else if (typeof window.ActiveXObject != "undefined") {
+	} else if(document.oRequestFullscreen) {
+					document.oCancelFullScreen();
+	}else if (typeof window.ActiveXObject != "undefined") {
 		// for IE
 		try {
 			var wscript = new ActiveXObject("WScript.Shell");
@@ -194,31 +193,28 @@ function exitFullscreen() {
 }
 
 function fullScreen(id){
+	console.log(id);
 	if(!window.isFullScreen){
 		window.isFullScreen=false;
 	}
 	window.isFullScreen=window.isFullScreen?false:true;
 	if(window.isFullScreen){
 		requestFullScreen();
-		try{
-			if(id){
-				var obj=Ext.getCmp(id);
-				if(obj){
-					obj.setText('恢复');
-				}
-			}
-		}catch(e){
-			
-		}
+		document.getElementById("fullScreen").innerHTML="恢复";
+//		try{
+//			if(id){
+//				var obj=Ext.getCmp(id);
+//				if(obj){
+//					obj.setText('恢复');
+//				}
+//			}
+//		}catch(e){
+//			
+//		}
 	}else{
 		exitFullscreen();
 		try{
-			if(id){
-				var obj=Ext.getCmp(id);
-				if(obj){
-					obj.setText('全屏');
-				}
-			}
+			document.getElementById("fullScreen").innerHTML="全屏";
 		}catch(e){
 			
 		}

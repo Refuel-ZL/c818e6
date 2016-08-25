@@ -226,16 +226,11 @@ var viewport = null; // 代表浏览器窗口的整个区域
 											},
 											{
 												text : '全屏',
-												xtype : 'button',
+												xtype : 'panel',
 												cls : 'main-login-menu2',
 												width : 83,
 												height : 30,
-												iconCls : 'main-menu2-icon',
-												listeners : {
-													click : function(p, e, opt) {
-														fullScreen(p.id);
-													}
-												}
+												html:'<button type="button" id="fullScreen"  onclick="fullScreen(this.id)"onmouseout="this.style.backgroundColor=\'transparent\'"  onmouseover="this.style.backgroundColor=\'#b0ccf2\'">全屏</button>'
 											},
 											{
 												xtype : 'button',
