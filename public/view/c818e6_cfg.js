@@ -1,7 +1,7 @@
 var viewport = null;
+var state=true;
 (function() {
-	Ext
-			.onReady(function() {
+	Ext.onReady(function() {
 				initExtJS();
 				if (viewport == null) {
 					var buildserialport = function(cfg) {
@@ -33,8 +33,7 @@ var viewport = null;
 							}
 							rt = {
 								initFormData : function(port) {
-									Ext.Ajax
-											.request({
+									Ext.Ajax.request({
 												url : '/load',
 												method : 'POST',
 												waitTitle : '请稍等...',
@@ -43,27 +42,19 @@ var viewport = null;
 													id : 5,
 													port : port
 												},
-												success : function(response,
-														opts) {
-													var jsonobject = Ext.util.JSON
-															.decode(response.responseText);
+												success : function(response,opts) {
+													var jsonobject = Ext.util.JSON.decode(response.responseText);
 													if (jsonobject) {
-														var obj = Ext
-																.getCmp(Ext.String
-																		.format(
-																				"serialport_{0}",
-																				cfg.exName));
+														var obj = Ext.getCmp(Ext.String.format("serialport_{0}",cfg.exName));
 														if (obj) {
-															obj
-																	.getForm()
-																	.setValues(
-																			jsonobject);
+															obj.getForm().setValues(jsonobject);
 														}
 													}
 												}
 											});
 								},
 								xtype : 'form',
+								trackResetOnLoad:true,
 								formid : Ext.String.format("{0}", cfg.sindex),
 								id : Ext.String.format("serialport_{0}",
 										cfg.exName),
@@ -92,25 +83,15 @@ var viewport = null;
 											id : 'form_port_submit',
 											cls : 'sui-btn btn-bordered btn-xlarge btn-success',
 											handler : function() {
-												if (cfg.update
-														&& Ext
-																.isFunction(cfg.update)) {
+												if (cfg.update&& Ext.isFunction(cfg.update)&&this.up('form').getForm().isDirty()) {
 													try {
-														var vals = this.up(
-																'form')
-																.getForm()
-																.getValues();
-														cfg
-																.update([
-																		vals['port'],
-																		vals,
-																		this
-																				.up('form').id,
-																		parseInt(this
-																				.up('form').formid) ]);
+														var vals = this.up('form').getForm().getValues();
+														cfg.update([vals['port'],vals,this.up('form').id,parseInt(this.up('form').formid) ]);
 													} catch (e) {
 														console.log(e);
 													}
+												}else{
+													console.log("没有提交");
 												}
 											}
 										},
@@ -119,10 +100,8 @@ var viewport = null;
 											text : '放弃修改',
 											cls : 'sui-btn btn-bordered btn-xlarge btn-info',
 											handler : function() {
-												this.up('form').getForm()
-														.reset();
-												this.up('form').initFormData(
-														cfg.sindex);
+												this.up('form').getForm() .reset();
+												this.up('form').initFormData(cfg.sindex);
 											}
 										},
 										'->',
@@ -130,16 +109,12 @@ var viewport = null;
 											text : '恢复默认',
 											cls : 'sui-btn btn-bordered btn-xlarge btn-warning',
 											handler : function() {
-												if (cfg.loadDefault
-														&& Ext
-																.isFunction(cfg.loadDefault)) {
+												this.up("form").getForm().trackResetOnLoad=false;
+												if (cfg.loadDefault&& Ext.isFunction(cfg.loadDefault)) {
 													try {
-														cfg
-																.loadDefault(
-																		this
-																				.up('form').formid,
-																		this
-																				.up('form').id);
+														cfg.loadDefault(
+															this.up('form').formid,
+															this.up('form').id);
 													} catch (e) {
 														console.log(e);
 													}
@@ -166,6 +141,11 @@ var viewport = null;
 										obj.setDisabled(!b);
 									}
 									return b ? true : '端口值无效';
+								},
+								listeners : {
+									'blur':function(v) {
+										state=false;
+									}
 								}
 							}, {
 								fieldLabel : '波特率',
@@ -212,7 +192,12 @@ var viewport = null;
 										"rate" : "115200",
 										"name" : "115200"
 									} ]
-								})
+								}),
+								listeners : {
+									'blur':function(v) {
+										state=false;
+									}
+								}
 							}, {
 								fieldLabel : '数据位',
 								name : 'data_bits',
@@ -237,7 +222,12 @@ var viewport = null;
 										"db" : "8",
 										"name" : "8"
 									} ]
-								})
+								}),
+								listeners : {
+									'blur':function(v) {
+										state=false;
+									}
+								}
 							}, {
 								fieldLabel : '校验方式',
 								name : 'parity',
@@ -262,7 +252,12 @@ var viewport = null;
 										"parity" : "s",
 										"name" : "SPACE"
 									} ]
-								})
+								}),
+								listeners : {
+									'blur':function(v) {
+										state=false;
+									}
+								}
 							}, {
 								fieldLabel : '停止位',
 								name : 'stop_bits',
@@ -281,7 +276,12 @@ var viewport = null;
 										"sb" : "2",
 										"name" : "2"
 									} ]
-								})
+								}),
+								listeners : {
+									'blur':function(v) {
+										state=false;
+									}
+								}
 							} ];
 					var viewItem = [];
 					var page = localStorage['id'];
@@ -325,8 +325,7 @@ var viewport = null;
 								if (params && Ext.isArray(params)
 										&& params.length == 4) {
 									var index = params[0], vals = params[1];
-									Ext.Ajax
-											.request({
+									Ext.Ajax.request({
 												url : '/save',
 												method : 'POST',
 												waitTitle : '请稍等...',
@@ -338,28 +337,17 @@ var viewport = null;
 													data : Ext.util.JSON
 															.encode(vals)
 												},
-												success : function(response,
-														opts) {
-													var jsonobject = Ext.util.JSON
-															.decode(response.responseText);
-													if (jsonobject.status == -1
-															|| jsonobject.status == -2) {
+												success : function(response,opts) {
+													var jsonobject = Ext.util.JSON.decode(response.responseText);
+													if (jsonobject.status == -1|| jsonobject.status == -2) {
 														if (jsonobject.status == -1) {
-															if (parent.Ext
-																	&& parent.Ext.loginview
-																	&& base) {
-																parent.Ext
-																		.loginview(
-																				0,
-																				base.update,
-																				params);
+															if (parent.Ext&& parent.Ext.loginview&& base) {
+																parent.Ext.loginview(0,base.update,params);
 															}
 														} else {
-															var obj = Ext
-																	.getCmp('form_port_submit');
+															var obj = Ext.getCmp('form_port_submit');
 															if (obj) {
-																obj
-																		.setDisabled(true);
+																obj.setDisabled(true);
 															}
 															obj = Ext.getCmp('c818e6_port');
 															if (obj) {
@@ -367,14 +355,10 @@ var viewport = null;
 															}
 														}
 													} else {
-														Ext.Msg
-																.alert(
-																		'信息',
-																		Ext.String
-																				.format(
-																						'保存{0}',
-																						(jsonobject && jsonobject.status == 1) ? "成功"
-																								: "失败"));
+														Ext.Msg.alert('信息',Ext.String.format('保存{0}',(jsonobject && jsonobject.status == 1) ? "成功": "失败"));
+														if(jsonobject && jsonobject.status == 1){
+															state=true;
+														}
 													}
 												},
 												failure : function() {
@@ -519,5 +503,6 @@ var viewport = null;
 					});
 				}
 				unmask();
-			});
+	
+	});
 })();

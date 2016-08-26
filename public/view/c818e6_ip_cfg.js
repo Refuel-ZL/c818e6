@@ -1,6 +1,8 @@
 var viewport = null;
+var state=true;
 (function() {
 	Ext.onReady(function() {
+		Ext.QuickTips.init();
 				initExtJS();
 				if (viewport == null) {
 					var _ip='';
@@ -63,6 +65,7 @@ var viewport = null;
 									id : 'ip_config',
 									layout : 'column',
 									border : 'false',
+									trackResetOnLoad:true,
 									defaults : {
 										columnWidth : 1,
 										margin : '15px 80px 0 50px',
@@ -81,14 +84,17 @@ var viewport = null;
 												id : 'form_button_save',
 												cls : 'sui-btn btn-bordered btn-xlarge btn-success',
 												handler : function() {
-													if (cfg.update
-															&& Ext.isFunction(cfg.update)) {
+													if (cfg.update && Ext.isFunction(cfg.update)) {
 														try {
 															var form = this.up("form").getForm();
-															if (form.isValid()) {
-																cfg.update(form.getValues());
-															} else {
-																Ext.Msg.alert("非法提交","请按要求填写!!!");
+															console.log(form.isDirty());
+															if(form.isDirty()){
+																if (form.isValid()) {
+																	cfg.update(form.getValues());
+																	state=true;
+																} else {
+																	Ext.Msg.alert("非法提交","请按要求填写!!!");
+																}
 															}
 														} catch (e) {
 															console.log(e);
@@ -111,6 +117,7 @@ var viewport = null;
 												text : '恢复默认',
 												cls : 'sui-btn btn-bordered btn-xlarge btn-warning',
 												handler : function() {
+													this.up("form").getForm().trackResetOnLoad=false;
 													if (cfg.loadDefault&& Ext.isFunction(cfg.loadDefault)) {
 														try {
 															cfg.loadDefault(this.up("form").getForm());
@@ -119,78 +126,162 @@ var viewport = null;
 														}
 													}
 												}
-											}, '->', '->' ]
+									    }, '->', '->' ]
 								} ]
 							};
 						}
 						return rt;
 					};
-					var formItems = [
-							{
+					var formItems = [{
 								fieldLabel : 'IP地址',
 								id : 'form_ip_address',
 								name : 'address',
+								blankText:'请输入IP地址',
+   							    msgTarget:'qtip',
 								allowBlank : false,
 								enableKeyEvents : true,
-								listeners : 
-									{'blur':function(v) {
-									var a=v.lastValue;
-									var b = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(a);
-									if (b) {
-										if(_ip!=a){
-											Ext.Ajax.request({
-														url : '/validate',
-														method : 'POST',
-														waitTitle : '请稍等...',
-														waitMsg : '正在加载信息...',
-														params : {
-															address : a
-														},
-														success : function(response, opts) {
-															var jsonobject = Ext.util.JSON.decode(response.responseText);
-															if (jsonobject) {
-																var obj = Ext.getCmp("form_ip_address");
-																var c = Ext.getCmp('form_button_save');
-																if (c) {
-																	c.setDisabled(jsonobject.status == 1);
-																}
-																if (obj) {
-																	if (jsonobject.status == 1) {
-																		obj.markInvalid([{field : 'address',message : 'IP地址冲突,已经被使用.'}]);
-																		console.log(a+" IP地址,已经被使用.");
-																	} else {
-																		obj.clearInvalid();
-																	}
+								listeners : {
+									'blur':function(v) {
+										state=false;
+										var a=v.lastValue;
+										if (judge_ip(a)) {
+											if(_ip!=a){
+												Ext.Ajax.request({
+													url : '/validate',
+													method : 'POST',
+													waitTitle : '请稍等...',
+													waitMsg : '正在加载信息...',
+													params : {
+														address : a
+													},
+													success : function(response, opts) {
+														var jsonobject = Ext.util.JSON.decode(response.responseText);
+														if (jsonobject) {
+															var obj = Ext.getCmp("form_ip_address");
+															var c = Ext.getCmp('form_button_save');
+															if (c) {
+																c.setDisabled(jsonobject.status == 1);
+															}
+															if (obj) {
+																if (jsonobject.status == 1) {
+																	obj.markInvalid([{field : 'address',message : 'IP地址冲突,已经被使用.'}]);
+																	console.log(a+" IP地址,已经被使用.");
+																} else {
+																	console.log(a+" IP地址,可以使用.");
+																	obj.clearInvalid();
+																	c.setDisabled(false);
 																}
 															}
 														}
+													}
 												});
-											}else{
-												var obj = Ext.getCmp("form_ip_address");
-												if(obj){
-													obj.clearInvalid();
-												}
 											}
+										}else{
+											var c = Ext.getCmp('form_button_save');
+											var obj = Ext.getCmp("form_ip_address");
+											obj.markInvalid([{field : 'address',message : 'IP地址不合法.'}]);
+											c.setDisabled(true);
 										}
-									return b;
-}}
-							}, {
+								}}
+					}, {
 								fieldLabel : '子网掩码',
 								name : 'netmask',
-								allowBlank : false
+								id:'form_ip_netmask',
+								allowBlank : false,
+								enableKeyEvents : true,
+								listeners : {
+									'blur':function(v) {
+										state=false;
+										var c = Ext.getCmp('form_button_save');
+										var a=v.lastValue;
+										if (judge_ip(a)){
+											c.setDisabled(false);
+										}else{
+											c.setDisabled(true);
+											var obj = Ext.getCmp("form_ip_netmask");
+											obj.markInvalid([{field : 'address',message : '子网掩码不合法.'}]);
+										}
+									}
+								}
+								
 							}, {
 								fieldLabel : '默认网关',
 								name : 'gateway',
-								allowBlank : false
+								id:'form_ip_gateway',
+								allowBlank : false,
+								enableKeyEvents : true,
+								listeners : {
+									'blur':function(v) {
+										state=false;
+										var c = Ext.getCmp('form_button_save');
+										var a=v.lastValue;
+										if (judge_ip(a)){
+											c.setDisabled(false);
+										}else{
+											c.setDisabled(true);
+											var obj = Ext.getCmp("form_ip_gateway");
+											obj.markInvalid([{field : 'gateway',message : '默认网关不合法.'}]);
+										}
+									}
+								}	
 							}, {
 								fieldLabel : '首选DNS',
 								name : 'dns1',
-								allowBlank : true
+								allowBlank : true,
+								id:'form_ip_dns1',
+								listeners : {
+									'blur':function(v) {
+										state=false;
+										var c = Ext.getCmp('form_button_save');
+										var a=v.lastValue;
+										if(a!=''){
+											if (judge_ip(a)){
+													c.setDisabled(false);
+												}else{
+													c.setDisabled(true);
+													var obj = Ext.getCmp("form_ip_dns1");
+													obj.markInvalid([{field : 'dns1',message : '首选DNS不合法.'}]);
+											}
+										}
+									}
+								}
 							}, {
 								fieldLabel : '备用DNS',
 								name : 'dns2',
-								allowBlank : true
+								allowBlank : true,
+								id:'form_ip_dns2',
+								listeners : {
+									'blur':function(v) {
+										state=false;
+										var c = Ext.getCmp('form_button_save');
+										var a=v.lastValue;
+										if(a!=''){
+											if (judge_ip(a)){
+												c.setDisabled(false);
+											}else{
+												c.setDisabled(true);
+												var obj = Ext.getCmp("form_ip_dns2");
+												obj.markInvalid([{field : 'dns2',message : '首选DNS不合法.'}]);
+											}
+										}
+									}
+								}
 							} ];
+					var judge_ip=function (ip){
+							var b = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip);
+							var c=true;
+							var arr=ip.split(".");
+							if (b) {
+								for (var i=0;i<arr.length;i++) {
+									if(arr[i]<0||arr[i]>255){
+										c=false;
+									}
+								}
+							}else{
+								c=false;
+							}
+							return c;
+					}
 					var viewItem = null;
 					var base = {
 						items : formItems,
@@ -214,10 +305,7 @@ var viewport = null;
 												if(jsonobject && jsonobject.status == 1){
 													var url = "http://"+vals.address+":"+window.location.port+"/";
 													Ext.Msg.wait('跳转网页: '+url,'提示 5S后'); 
-													setTimeout(function () {
-													          top.location.href=url;
-													       },5000);
-													
+													setTimeout(function () {top.location.href=url; },5000);
 												}else{
 													Ext.Msg.alert('信息','失败');
 												}
@@ -265,6 +353,7 @@ var viewport = null;
 						},
 						cls : 'web_cfg',
 					});
-				}
-			});
+		}
+	
+	});
 })();

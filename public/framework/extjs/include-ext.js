@@ -152,15 +152,32 @@ function unmask() {
 }
 
 function requestFullScreen() {
-	 var el = document.documentElement,
-        rfs = el.requestFullscreen || el.mozRequestFullScreen || el.webkitRequestFullScreen || el.msRequestFullscreen,
-        wscript;
-    if(typeof rfs != "undefined" && rfs) {
-        rfs.call(el);
-        return;
+	 var el = document.documentElement;
+//      rfs = el.requestFullscreen || el.mozRequestFullScreen || el.webkitRequestFullScreen || el.msRequestFullscreen,
+//      wscript;
+//  if(typeof rfs != "undefined" && rfs) {
+//      rfs.call(el);
+//      return;
+//  }else if(typeof window.ActiveXObject != "undefined") {
+//      wscript = new ActiveXObject("WScript.Shell");
+//      if(wscript) {
+//          wscript.SendKeys("{F11}");
+//      }
+//  }
+  if(el.requestFullscreen) {
+       el.requestFullscreen();
+     } else if(el.mozRequestFullScreen) {
+       el.mozRequestFullScreen();
+     } else if(el.msRequestFullscreen){ 
+       el.msRequestFullscreen();  
+     } else if(el.oRequestFullscreen){
+        el.oRequestFullscreen();
     }
-    if(typeof window.ActiveXObject != "undefined") {
-        wscript = new ActiveXObject("WScript.Shell");
+    else if(el.webkitRequestFullscreen)
+     {
+       el.webkitRequestFullScreen();
+     }else if(typeof window.ActiveXObject != "undefined") {
+       var wscript = new ActiveXObject("WScript.Shell");
         if(wscript) {
             wscript.SendKeys("{F11}");
         }
