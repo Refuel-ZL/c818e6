@@ -213,7 +213,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 						cls: 'main-login-menu2',
 						width: 83,
 						height: 30,
-						html: '<button type="button" id="fullScreen"  onclick="fullScreen(this.id)" title="快捷键F11"onmouseout="this.style.backgroundColor=\'transparent\'"  onmouseover="this.style.backgroundColor=\'#b0ccf2\'">全屏</button>'
+						html: '<button type="button" id="fullScreen"  onclick="fullScreen(this.id)" title="快捷键F11" onmouseout="this.style.backgroundColor=\'transparent\'"  onmouseover="this.style.backgroundColor=\'#022896\'">全屏</button>'
 					}, {
 						xtype: 'button',
 						cls: 'main-login-menu3',
@@ -242,7 +242,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 							}
 						},
 						text: '重启',
-						iconCls: 'main-menu3-icon',
+//						iconCls: 'main-menu3-icon',
 						listeners: {
 							click: function(p, e, opt) {
 								this.restartImpl(p.restartImpl);
@@ -628,26 +628,15 @@ var viewport = null; // 代表浏览器窗口的整个区域
 				text: 'CPU1使用率（%）'
 			},
 			xAxis: {
-				type: 'datetime',
-				minorTickInterval: 'auto', // 设置是否出现纵向小标尺
 				minorGridLineColor: '#197F07',
 				lineColor: '#197F07', // 设置X轴颜色
-				tickInterval: 15 * 1000, // 刻度步长
+				tickInterval: 8 * 1000, // 刻度步长
 				// tickPixelInterval: 80, //刻度密度像素控制
 				gridLineColor: '#197F07', // 设置纵向标尺颜色
-				gridLineWidth: 0, // 设置纵向标尺宽度
-				// dateTimeLabelFormats: {
-				// second: '%H:%M:%S'
-				// }
+				gridLineWidth: -1, // 设置纵向标尺宽度
 				labels: {
-					style: {
-						color: '#FFF'
-					},
-					formatter: function() {
-						return Highcharts.dateFormat('%H:%M:%S',
-							this.value);
-					}
-				},
+					enabled: false	
+				}	
 			},
 			yAxis: {
 				title: false,
@@ -842,8 +831,3 @@ var viewport = null; // 代表浏览器窗口的整个区域
 	});
 		
 })();
-
-function click_(){
-		var s =document.getElementById("c818e6_ip_cfg").contentWindow.d;
-		console.log(s);
-	}
