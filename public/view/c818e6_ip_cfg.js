@@ -1,5 +1,5 @@
 var viewport = null;
-var state=true;
+var state=true;//跳转状态
 (function() {
 	Ext.onReady(function() {
 		Ext.QuickTips.init();
@@ -51,7 +51,7 @@ var state=true;
 													success : function(response, opts) {
 														var jsonobject = Ext.util.JSON.decode(response.responseText);
 														_ip=jsonobject.address;
-														console.log(_ip);
+														console.log("原ip："+_ip);
 														if (jsonobject) {
 															var obj = Ext.getCmp("ip_config");
 															if (obj) {
@@ -91,10 +91,12 @@ var state=true;
 															if(form.isDirty()){
 																if (form.isValid()) {
 																	cfg.update(form.getValues());
-																	state=true;
+																	form.setValues(form.getValues());
 																} else {
 																	Ext.Msg.alert("非法提交","请按要求填写!!!");
 																}
+															}else{
+																console.log("无需提交")
 															}
 														} catch (e) {
 															console.log(e);
@@ -110,6 +112,7 @@ var state=true;
 												handler : function() {
 													this.up('form').getForm().reset();
 													this.up('form').initFormData();
+													state=true;
 												}
 											},
 											'->',
@@ -118,6 +121,7 @@ var state=true;
 												cls : 'sui-btn btn-bordered btn-xlarge btn-warning',
 												handler : function() {
 													this.up("form").getForm().trackResetOnLoad=false;
+													state=false;
 													if (cfg.loadDefault&& Ext.isFunction(cfg.loadDefault)) {
 														try {
 															cfg.loadDefault(this.up("form").getForm());
@@ -142,8 +146,8 @@ var state=true;
 								enableKeyEvents : true,
 								listeners : {
 									'blur':function(v) {
-										state=false;
 										var a=v.lastValue;
+										state=false;
 										if (judge_ip(a)) {
 											if(_ip!=a){
 												Ext.Ajax.request({
@@ -305,6 +309,7 @@ var state=true;
 												if(jsonobject && jsonobject.status == 1){
 													var url = "http://"+vals.address+":"+window.location.port+"/";
 													Ext.Msg.wait('跳转网页: '+url,'提示 5S后'); 
+													state=true;
 													setTimeout(function () {top.location.href=url; },5000);
 												}else{
 													Ext.Msg.alert('信息','失败');

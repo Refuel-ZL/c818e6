@@ -148,7 +148,9 @@ body{
 .panel_center {
 	background: transparent !important;
 }
-
+#user-login-win{
+	border: none;
+}
 .box {
 	border: 1px solid #ddd;
 	box-shadow: 0px 0px 5px;

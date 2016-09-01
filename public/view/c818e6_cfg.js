@@ -83,15 +83,18 @@ var state=true;
 											id : 'form_port_submit',
 											cls : 'sui-btn btn-bordered btn-xlarge btn-success',
 											handler : function() {
+												var vals = this.up('form').getForm().getValues();
 												if (cfg.update&& Ext.isFunction(cfg.update)&&this.up('form').getForm().isDirty()) {
 													try {
-														var vals = this.up('form').getForm().getValues();
+														console.log("提交中....");
 														cfg.update([vals['port'],vals,this.up('form').id,parseInt(this.up('form').formid) ]);
+														this.up('form').getForm().setValues(vals);
 													} catch (e) {
 														console.log(e);
+														this.up("form").getForm().trackResetOnLoad=false;
 													}
 												}else{
-													console.log("没有提交");
+													console.log("无需提交");
 												}
 											}
 										},
@@ -100,8 +103,9 @@ var state=true;
 											text : '放弃修改',
 											cls : 'sui-btn btn-bordered btn-xlarge btn-info',
 											handler : function() {
-												this.up('form').getForm() .reset();
+												this.up('form').getForm().reset();
 												this.up('form').initFormData(cfg.sindex);
+												state=true;
 											}
 										},
 										'->',
@@ -109,12 +113,11 @@ var state=true;
 											text : '恢复默认',
 											cls : 'sui-btn btn-bordered btn-xlarge btn-warning',
 											handler : function() {
+												state=false;
 												this.up("form").getForm().trackResetOnLoad=false;
 												if (cfg.loadDefault&& Ext.isFunction(cfg.loadDefault)) {
 													try {
-														cfg.loadDefault(
-															this.up('form').formid,
-															this.up('form').id);
+														cfg.loadDefault(this.up('form').formid,this.up('form').id);
 													} catch (e) {
 														console.log(e);
 													}

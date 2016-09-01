@@ -20,7 +20,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 				'</div>' +
 				'<a  id="Right" class="a1" href="javascript:void(0)" onmousedown="moveRight()"></a>' +
 				'</div>';
-			var vcenter = { // 子中面板 items
+			var vcenter = { // 子面板 items
 				xtype: 'panel',
 				region: 'center',
 				layout: 'border',
@@ -519,7 +519,6 @@ var viewport = null; // 代表浏览器窗口的整个区域
 		});
 
 		var loadC818E6Page = function(id, n) {
-			console.log(id+"   跳转");
 			localStorage['id'] = id;
 			var el = Ext.get('c818e6_ip_cfg');
 			if(el) {
