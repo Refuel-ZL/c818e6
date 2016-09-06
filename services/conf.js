@@ -344,8 +344,7 @@ function conf() {
 		updateAll : function(cfg) {
 			var status = 0;
 			if (cfg) {
-				if (cfg.ip && cfg.serials && cfg.serials.length == 6
-						&& cfg.user) {
+				if (cfg.ip && cfg.serials && cfg.serials.length == 6&& cfg.user) {
 					var str = "";
 					for ( var i = 0; i < cfg.serials.length; i++) {
 						var tmp = util.format("%d\t%d\t%s\t%d\t%d",
@@ -368,7 +367,7 @@ function conf() {
 					str = util.format('%s\n%s', str, util.format("%s %s",
 							"dns1", cfg.ip.dns1));
 					str = util.format('%s\n%s', str, util.format("%s %s",
-							"dns2", cfg.ip.dns1));
+							"dns2", cfg.ip.dns2));
 					if (!cfg.user.username) {
 						cfg.user["username"] = "admin";
 						cfg.user["password"] = "123";

@@ -56,11 +56,9 @@ var state=true;
 								xtype : 'form',
 								trackResetOnLoad:true,
 								formid : Ext.String.format("{0}", cfg.sindex),
-								id : Ext.String.format("serialport_{0}",
-										cfg.exName),
+								id : Ext.String.format("serialport_{0}",cfg.exName),
 								layout : 'column',
-								cls : Ext.String.format('serialport_cfg_{0}',
-										cfg.exName),
+								cls : Ext.String.format('serialport_cfg_{0}',cfg.exName),
 								defaults : {
 									columnWidth : 1,
 									margin : '10px 80px 0 50px',
@@ -82,6 +80,8 @@ var state=true;
 											text : '立即生效',
 											id : 'form_port_submit',
 											cls : 'sui-btn btn-bordered btn-xlarge btn-success',
+											enableToggle: true,
+//											scale: 'medium',
 											handler : function() {
 												var vals = this.up('form').getForm().getValues();
 												if (cfg.update&& Ext.isFunction(cfg.update)&&this.up('form').getForm().isDirty()) {

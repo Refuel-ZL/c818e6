@@ -152,88 +152,76 @@ function unmask() {
 }
 
 function requestFullScreen() {
-	 var el = document.documentElement;
-//      rfs = el.requestFullscreen || el.mozRequestFullScreen || el.webkitRequestFullScreen || el.msRequestFullscreen,
-//      wscript;
-//  if(typeof rfs != "undefined" && rfs) {
-//      rfs.call(el);
-//      return;
-//  }else if(typeof window.ActiveXObject != "undefined") {
-//      wscript = new ActiveXObject("WScript.Shell");
-//      if(wscript) {
-//          wscript.SendKeys("{F11}");
-//      }
-//  }
-  if(el.requestFullscreen) {
-       el.requestFullscreen();
-     } else if(el.mozRequestFullScreen) {
-       el.mozRequestFullScreen();
-     } else if(el.msRequestFullscreen){ 
-       el.msRequestFullscreen();  
-     } else if(el.oRequestFullscreen){
-        el.oRequestFullscreen();
-    }
-    else if(el.webkitRequestFullscreen)
-     {
-       el.webkitRequestFullScreen();
-     }else if(typeof window.ActiveXObject != "undefined") {
-       var wscript = new ActiveXObject("WScript.Shell");
-        if(wscript) {
-            wscript.SendKeys("{F11}");
-        }
-    }
+	//	var el = document.documentElement;
+	//	rfs = el.requestFullscreen || el.mozRequestFullScreen || el.webkitRequestFullscreen || el.msRequestFullscreen || el.oRequestFullscreen;
+	//	if(typeof rfs != "undefined" && rfs) {
+	//		rfs.call(el);
+	//	} else if(typeof window.ActiveXObject != "undefined") {
+	//		var wscript = new ActiveXObject("WScript.Shell");
+	//		if(wscript) {
+	//			wscript.SendKeys("{F11}");
+	//		}
+	//	}
+	var docElm = document.documentElement;
+	if(docElm.requestFullscreen) {
+		docElm.requestFullscreen();
+	} else if(docElm.msRequestFullscreen) {
+		docElm.msRequestFullscreen();
+	} else if(docElm.mozRequestFullScreen) {
+		docElm.mozRequestFullScreen();
+	} else if(docElm.webkitRequestFullScreen) {
+		docElm.webkitRequestFullScreen();
+	}
 }
 
 function exitFullscreen() {
-	var de = document;
-	if (de.exitFullscreen) {
-		de.exitFullscreen();
-	}else if(de.msExitFullscreen) {
-		de.msExitFullscreen();
-	} else if (de.mozCancelFullScreen) {
-		de.mozCancelFullScreen();
-	} else if (de.webkitCancelFullScreen) {
-		de.webkitCancelFullScreen();
-	} else if(document.oRequestFullscreen) {
-					document.oCancelFullScreen();
-	}else if (typeof window.ActiveXObject != "undefined") {
-		// for IE
-		try {
-			var wscript = new ActiveXObject("WScript.Shell");
-			if (wscript != null) {
-				wscript.SendKeys("{F11}");
-			}
-		} catch (e) {
-
-		}
+	//	var de = document;
+	//	if(de.exitFullscreen) {
+	//		de.exitFullscreen();
+	//	} else if(de.msExitFullscreen) {
+	//		de.msExitFullscreen();
+	//	} else if(de.mozCancelFullScreen) {
+	//		de.mozCancelFullScreen();
+	//	} else if(de.webkitCancelFullScreen) {
+	//		de.webkitCancelFullScreen();
+	//	} else if(document.oRequestFullscreen) {
+	//		document.oCancelFullScreen();
+	//	} else if(typeof window.ActiveXObject != "undefined") {
+	//		// for IE
+	//		try {
+	//			var wscript = new ActiveXObject("WScript.Shell");
+	//			if(wscript != null) {
+	//				wscript.SendKeys("{F11}");
+	//			}
+	//		} catch(e) {
+	//
+	//		}
+	//	}
+	if(document.exitFullscreen) {
+		document.exitFullscreen();
+	} else if(document.msExitFullscreen) {
+		document.msExitFullscreen();
+	} else if(document.mozCancelFullScreen) {
+		document.mozCancelFullScreen();
+	} else if(document.webkitCancelFullScreen) {
+		document.webkitCancelFullScreen();
 	}
 }
 
-function fullScreen(id){
-	console.log(id);
-	if(!window.isFullScreen){
-		window.isFullScreen=false;
+function fullScreen(id) {
+	if(!window.isFullScreen) {
+		window.isFullScreen = false;
 	}
-	window.isFullScreen=window.isFullScreen?false:true;
-	if(window.isFullScreen){
+	window.isFullScreen = window.isFullScreen ? false : true;
+	if(window.isFullScreen) {
 		requestFullScreen();
-		document.getElementById("fullScreen").innerHTML="恢复";
-//		try{
-//			if(id){
-//				var obj=Ext.getCmp(id);
-//				if(obj){
-//					obj.setText('恢复');
-//				}
-//			}
-//		}catch(e){
-//			
-//		}
-	}else{
+		document.getElementById("fullScreen").innerHTML = "恢复";
+	} else {
 		exitFullscreen();
-		try{
-			document.getElementById("fullScreen").innerHTML="全屏";
-		}catch(e){
-			
+		try {
+			document.getElementById("fullScreen").innerHTML = "全屏";
+		} catch(e) {
+
 		}
 	}
 }

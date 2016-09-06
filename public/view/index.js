@@ -91,7 +91,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 							border: false,
 							frame: false,
 							listeners: {
-								resize: function(p,width, height,oldWidth,oldHeight,eOpts) {}
+								resize: function(p, width, height, oldWidth, oldHeight, eOpts) {}
 							},
 							html: '<div id="loader_container"><div id="loader"><div id="loader_bg"></div><div align="center">页面组件加载中……<br />加载可能会花费一些时间，请稍候...</div></div></div><iframe id="c818e6_ip_cfg" class="ifrmae_border" src="view/c818e6_ip_cfg.html" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>',
 						}, {
@@ -213,7 +213,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 						cls: 'main-login-menu2',
 						width: 83,
 						height: 30,
-						html: '<button type="button" id="fullScreen"  onclick="fullScreen(this.id)" title="快捷键F11" onmouseout="this.style.backgroundColor=\'transparent\'"  onmouseover="this.style.backgroundColor=\'#022896\'">全屏</button>'
+						html: '<button type="button" id="fullScreen"  onclick="fullScreen(this.id)" onmouseout="this.style.backgroundColor=\'transparent\'"  onmouseover="this.style.backgroundColor=\'#b0ccf2\'">全屏</button>'
 					}, {
 						xtype: 'button',
 						cls: 'main-login-menu3',
@@ -228,13 +228,41 @@ var viewport = null; // 代表浏览器窗口的整个区域
 									method: 'POST',
 									waitTitle: '请稍等...',
 									waitMsg: '正在重启...',
-									success: function(response,opts) {
+									success: function(response, opts) {
 										var jsonobject = Ext.util.JSON.decode(response.responseText);
 										if(jsonobject) {
 											if(jsonobject.status == -1) {
 												Ext.loginview(0);
 											} else {
-												Ext.Msg.alert('信息',Ext.String.format('重启{0}',(jsonobject.status == 1) ? "成功" :"失败"));
+												 var url = window.location.href;
+												 if(jsonobject.status == 1){
+													 Ext.Msg.wait('正在尝试重新连接。。。。。',"重启成功"); 
+													 var n=0;
+													 var timer1=setInterval(
+													 	function () {
+													 	if(n>=6){
+													 		clearInterval(timer1);
+													 		Ext.Msg.hide();
+													 		Ext.Msg.alert("错误","重连超时！，请确认设备是否运行正常"); 
+													 	}
+													 	Ext.Ajax.request({
+																url: url,
+																method: 'GET',
+																success: function(response, opts) {
+																	console.log("重启成功");
+																	Ext.Msg.hide();
+																	clearInterval(timer1);
+																	top.location.href=url;
+																},
+																failure: function(response, opts) {
+																	n++;
+																	console.log("尝试重新连接");
+															    }
+														});
+													 },5000);
+												}else{
+													Ext.Msg.alert("错误","重启失败"); 
+												}
 											}
 										}
 									}
@@ -242,7 +270,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 							}
 						},
 						text: '重启',
-//						iconCls: 'main-menu3-icon',
+						//						iconCls: 'main-menu3-icon',
 						listeners: {
 							click: function(p, e, opt) {
 								this.restartImpl(p.restartImpl);
@@ -347,183 +375,79 @@ var viewport = null; // 代表浏览器窗口的整个区域
 							height: 70,
 							id: 'user-login-button',
 							baseCls: 'login-button-base',
-							cls: mod ? 'changepwd-button' :'login-button',
-							overCls: mod ? 'changepwd-button-over' :'login-button-over',
-							focusCls: mod ? 'changepwd-button-focus' :'login-button-focus',
-							handler: function(p,e, opt) {
+							cls: mod ? 'changepwd-button' : 'login-button',
+							overCls: mod ? 'changepwd-button-over' : 'login-button-over',
+							focusCls: mod ? 'changepwd-button-focus' : 'login-button-focus',
+							handler: function(p, e, opt) {
 								var user = Ext.getCmp('textfiled_username').getValue();
 								var pwd = Ext.getCmp('textfiled_password').getValue();
-								Ext.Ajax.request({url: mod ? '/save' :'/login',
-										method: 'POST',
-										waitTitle: '请稍等...',
-										waitMsg: '正在加载信息...',
-										params: mod ? {id: 0,data: Ext.util.JSON.encode({oldpassword: user,password: pwd})} :{username: user,password: pwd},
-										success: function(response,opts) {
-											var jsonobject = Ext.util.JSON.decode(response.responseText);
-											if(jsonobject &&jsonobject.status == 1) {
-												Ext.getCmp('user-login-win').close();
-												var menu = Ext.getCmp('main-login-menu1');
-												if(menu) {
-													menu.fireEvent('blur',menu);
-													if(!mod) { // 登录成功后
-														Ext.loginstatus = 1;
-														try {
-															menu.setText("改密码");
-														} catch(e) {
+								var b= /^[A-Za-z0-9]{3,16}$/.test(pwd);
+								console.log(b);
+								if(b){
+								Ext.Ajax.request({
+									url: mod ? '/save' : '/login',
+									method: 'POST',
+									waitTitle: '请稍等...',
+									waitMsg: '正在加载信息...',
+									params: mod ? {
+										id: 0,
+										data: Ext.util.JSON.encode({
+											oldpassword: user,
+											password: pwd
+										})
+									} : {
+										username: user,
+										password: pwd
+									},
+									success: function(response, opts) {
+										var jsonobject = Ext.util.JSON.decode(response.responseText);
+										if(jsonobject && jsonobject.status == 1) {
+											Ext.getCmp('user-login-win').close();
+											var menu = Ext.getCmp('main-login-menu1');
+											if(menu) {
+												menu.fireEvent('blur', menu);
+												if(!mod) { // 登录成功后
+													Ext.loginstatus = 1;
+													try {
+														menu.setText("改密码");
+													} catch(e) {
 
-														}
 													}
-												}
-												try {
-													if(next && Ext.isFunction(next)) {
-														next(nextParams);
-													}
-												} catch(e) {
-
-												}
-
-											} else {
-												if(mod) {
-													Ext.getCmp('textfiled_username').markInvalid('旧密码有误!');
-												} else {
-													Ext.getCmp('textfiled_password').markInvalid('密码有误!');
 												}
 											}
+											try {
+												if(next && Ext.isFunction(next)) {
+													next(nextParams);
+												}
+											} catch(e) {
+
+											}
+
+										} else {
+											if(mod) {
+												Ext.getCmp('textfiled_username').markInvalid('旧密码有误!');
+											} else {
+												Ext.getCmp('textfiled_password').markInvalid('密码有误!');
+											}
 										}
-									});
+									}
+								});
+								}else{
+									Ext.getCmp('textfiled_password').markInvalid('密码格式有误!数字字母 3-16位');
+								}
 							}
 						}]
 					});
 				win.show();
 			};
 		}
-		var buildipaddr = function(cfg) {
-			var rt = null;
-			if(cfg) {
-				var items = [];
-				if(cfg.title) {
-					items.push({
-						xtype: 'label',
-						text: cfg.title,
-						height: 30,
-						border: false,
-						cls: 'form_label'
-					});
-				}
-				if(cfg.items && Ext.isArray(cfg.items)) {
-					for(var i = 0; i < cfg.items.length; i++) {
-						var it = cfg.items[i];
-						var tmp = {};
-						Ext.apply(tmp, it);
-						if(i == 0 && !tmp.style) {
-							tmp["style"] = {'margin-top': '10px !important'};
-						}
-						tmp['cls'] = 'form_item';
-						items.push(tmp);
-					}
-				}
-				rt = {
-					xtype: 'panel',
-					region: 'center',
-					cls: 'ip_config ',
-					border: false,
-					items: [{
-						xtype: 'form',
-						layout: 'column',
-						border: 'false',
-						defaults: {
-							columnWidth: 1,
-							margin: '10px 10px 10 10px',
-							labelWidth: 60,
-							labelAlign: 'right',
-							cls: 'form_item_tra'
-						},
-						defaultType: 'textfield',
-						items: items,
-						buttons: [
-							'->',
-							'->', {
-								text: '提交',
-								handler: function() {
-									var form = this.up("form").getForm();
-									// console.log(form.getValues());
-									if(form.isValid()) {
-										Ext.Ajax.request({
-												url: '#',
-												method: 'POST',
-												// 等待时显示 等待
-												// 默认30s
-												// 如果还没有值返回，就判定失败
-												waitTitle: '请稍等...',
-												waitMsg: '正在提交信息...',
-												params: {
-													id: 1,
-													data: Ext.util.JSON.encode(form.getValues())
-												},
-												success: function(response,opts) {
-													var jsonobject = Ext.util.JSON.decode(response.responseText);
-													Ext.Msgalert('信息',Ext.String.format('保存{0}',(jsonobject && jsonobject.status == 1) ? "成功" :"失败"));
-												},
-												failure: function() {Ext.Msg.alert('信息',"保存失败");
-												}
-											});
-									}
-								}
-							}, '->', {
-								text: '重置',
-								handler: function() {
-
-								}
-							}, '->', '->'
-						]
-					}]
-				};
-			}
-			return rt;
-		};
-		var formItems = [{
-			fieldLabel: '用户名',
-			name: 'u_name',
-			allowBlank: false
-		}, {
-			fieldLabel: '密码',
-			name: 'u_password',
-			allowBlank: false
-		}];
-		var viewItem = null;
-		var base = {
-			items: formItems,
-			update: function(vals) {
-				console.log(vals);
-			},
-			loadDefault: function(index) {
-				console.log(index);
-			}
-		};
-		var tmp = {};
-		Ext.apply(tmp, base);
-		tmp['index'] = 0;
-		// tmp['title'] = '网络配置';
-		viewItem = buildipaddr(tmp);
-		viewport = new Ext.Window({
-			// xtype: 'panel',
-			layout: 'fit', // 自适应布局
-			align: 'center',
-			title: '登陆',
-			height: 195,
-			resizable: false,
-			maximizable: false, // 禁止最大化
-			draggable: false,
-			width: 300,
-			items: viewItem,
-		});
 
 		var loadC818E6Page = function(id, n) {
 			localStorage['id'] = id;
 			var el = Ext.get('c818e6_ip_cfg');
 			if(el) {
 				mask();
-				var url = (id === 1 ? 'view/c818e6_ip_cfg.html' :'view/c818e6_cfg.html');
+				var url = (id === 1 ? 'view/c818e6_ip_cfg.html' : 'view/c818e6_cfg.html');
 				el.dom.src = url;
 				var iframe = document.getElementById("c818e6_ip_cfg");
 				var targelem = document.getElementById('loader_container');
@@ -547,7 +471,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 		};
 		var initPaging = function(id) {
 			loadC818E6Page(id, 0);
-			var m=id;
+			var m = id;
 			var aLi = Ext.getDom('page').getElementsByTagName('a');
 			if(aLi) {
 				for(var i = 0; i < aLi.length; i++) {
@@ -557,27 +481,27 @@ var viewport = null; // 代表浏览器窗口的整个区域
 							for(var n = 0; n < aLi.length; n++) {
 								aLi[n].className = "";
 							}
-							var l =this.index;
-							var ss=document.getElementById("c818e6_ip_cfg").contentWindow.state;
-							if(ss){
-								Ext.getDom('page').getElementsByTagName('a')[l-1].className = "active"; // 活动页
+							var l = this.index;
+							var ss = document.getElementById("c818e6_ip_cfg").contentWindow.state;
+							if(ss) {
+								Ext.getDom('page').getElementsByTagName('a')[l - 1].className = "active"; // 活动页
 								loadC818E6Page(l, 1000);
-								m=l-1;
-							}else{
-								Ext.MessageBox.confirm( "你已经作了一些数据修改", "是否真的要放弃", 
-										function(button,text){ 
-											if(button=="yes"){ 
-											 	Ext.getDom('page').getElementsByTagName('a')[l-1].className = "active"; // 活动页
-												// 切换显示内容
-												loadC818E6Page(l, 1000);
-												m=l-1;
-											}else{
-												Ext.getDom('page').getElementsByTagName('a')[m].className = "active"; // 上次活动页
-											}
-										} 
-								); 
+								m = l - 1;
+							} else {
+								Ext.MessageBox.confirm("你已经作了一些数据修改", "是否真的要放弃",
+									function(button, text) {
+										if(button == "yes") {
+											Ext.getDom('page').getElementsByTagName('a')[l - 1].className = "active"; // 活动页
+											// 切换显示内容
+											loadC818E6Page(l, 1000);
+											m = l - 1;
+										} else {
+											Ext.getDom('page').getElementsByTagName('a')[m].className = "active"; // 上次活动页
+										}
+									}
+								);
 							}
-							
+
 						}
 					};
 				}
@@ -591,7 +515,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 		});
 		var lineoptions = {
 			// colors: ["#04F404"],
-			colors: ["#0078D7"],
+			colors: ["#012D98"],
 			credits: { // 不显示Highcharts.com的链接
 				enabled: false
 			},
@@ -616,7 +540,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 						enabled: false
 							// 关闭数据点显示
 					},
-					lineWidth: 2,
+					lineWidth: 2
 				},
 			},
 			title: {
@@ -629,13 +553,14 @@ var viewport = null; // 代表浏览器窗口的整个区域
 			xAxis: {
 				minorGridLineColor: '#197F07',
 				lineColor: '#197F07', // 设置X轴颜色
-				tickInterval: 8 * 1000, // 刻度步长
+				tickInterval: 10 * 1000, // 刻度步长
+				tickWidth: 0,
 				// tickPixelInterval: 80, //刻度密度像素控制
-				gridLineColor: '#197F07', // 设置纵向标尺颜色
-				gridLineWidth: -1, // 设置纵向标尺宽度
+				gridLineColor: 'transparent', // 设置纵向标尺颜色
+				gridLineWidth: 0, // 设置纵向标尺宽度
 				labels: {
-					enabled: false	
-				}	
+					enabled: false
+				}
 			},
 			yAxis: {
 				title: false,
@@ -672,7 +597,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 						success: function(response, opts) {
 							var tmp = Ext.JSON.decode(response.responseText);
 							if(tmp && Ext.isObject(tmp)) {
-								for(var i = 24; i >= 0; i--) {
+								for(var i = 30; i >= 0; i--) {
 									data.push({
 										x: tmp.time - i * 1000,
 										y: 0
@@ -715,16 +640,14 @@ var viewport = null; // 代表浏览器窗口的整个区域
 					// return '<b>' + this.point.name + '</b>: ' +
 					// Highcharts.numberFormat(this.percentage, 2) + '
 					// %';
-					return '<b>' + this.point.name + '</b>: ' +
-						Highcharts.numberFormat(this.y, 2) * 1024 +
-						' MB';
+					return '<b>' + this.point.name + '</b>: ' +Highcharts.numberFormat(this.y, 2) * 1024 +' MB';
 				}
 			},
 			plotOptions: {
 				pie: {
 					size: '100%',
 					borderWidth: 0,
-					allowPointSelect: true,
+					allowPointSelect: false,
 					cursor: 'pointer',
 					showInLegend: true,
 					dataLabels: {
@@ -737,12 +660,24 @@ var viewport = null; // 代表浏览器窗口的整个区域
 							// lineHeight: '10px',
 						},
 						formatter: function() {
-							return '<b>' +Highcharts.numberFormat(this.percentage, 2) + ' %' +'</b>';
+							return '<b>' + Highcharts.numberFormat(this.percentage, 2) + ' %' + '</b>';
 						},
 
+					},
+					point: {
+						events: {
+							legendItemClick: function() {
+								return false;
+							},
+							click: function() {
+								return false;
+							}
+						}
 					}
 					//padding : 20,
+
 				}
+
 			},
 			legend: { // 图列
 				align: 'center', // 程度标的目标地位
@@ -759,6 +694,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
 					'color': '#fff',
 				},
 				floating: false,
+
 			},
 			series: [{
 				type: 'pie',
@@ -766,11 +702,15 @@ var viewport = null; // 代表浏览器窗口的整个区域
 				data: [{
 					name: '空闲内存',
 					y: 1,
-					color: '#0059A7'
+					color: '#0059A7',
+					//sliced: true
+					selected: true
 				}, {
 					name: '使用内存',
-					y: 0,
-					color: 'red'
+					y: 1,
+					color: 'red',
+					//sliced: true,
+					selected: true
 				}]
 			}]
 		};
@@ -782,51 +722,63 @@ var viewport = null; // 代表浏览器窗口的整个区域
 				var cpu2 = new Highcharts.Chart(lineoptions);
 				/** 饼图* */
 				pie_chart.title.text = "";
-				var memory1 = new Highcharts.Chart(
-					pie_chart);
-				setInterval(
-					function() {
+				var memory1 = new Highcharts.Chart(pie_chart);
+				 var time=0;
+				setInterval(function() {
 						Ext.Ajax.request({
-								url: '/rest',
-								method: 'POST',
-								success: function(response,opts) {
-									var tmp = Ext.JSON.decode(response.responseText);
-									if(tmp &&Ext.isObject(tmp) &&Ext.isArray(tmp.cores) &&
-										tmp.mem != null) {
-										var series = cpu1.series[0];
-										series.addPoint([tmp.time,tmp.cores[0]],true,true);
-										series = cpu2.series[0];
-										series.addPoint([tmp.time,tmp.cores[1]],true,true);
-										series = memory1.series[0];
-										var data = [];
-										var setcolor = '#0059A7';
-										if(tmp.mem < 0.5) {
-											setcolor = '#FF6347';
-										} else if(tmp.mem < 0.75) {
-											setcolor = '#FF0000';
-										} else {
-											setcolor = '#8B0000';
-										}
-										data.push({
-												name: '空闲内存',
-												y: 1 - tmp.mem,
-												color: '#0059A7'
-											}, {
-												name: '使用内存',
-												y: tmp.mem,
-												color: setcolor
-											});
-										series.setData(data,true);
+							url: '/rest',
+							method: 'POST',
+							success: function(response, opts) {
+								var tmp = Ext.JSON.decode(response.responseText);
+								if(tmp && Ext.isObject(tmp) && Ext.isArray(tmp.cores) &&tmp.mem != null) {
+									console.log(tmp.time);
+									time=tmp.time;
+									var series = cpu1.series[0];
+									series.addPoint([tmp.time, tmp.cores[0]], true, true);
+									series = cpu2.series[0];
+									series.addPoint([tmp.time, tmp.cores[1]], true, true);
+									series = memory1.series[0];
+									var data = [];
+									var setcolor = '#0059A7';
+									if(tmp.mem < 0.5) {
+										setcolor = '#FF6347';
+									} else if(tmp.mem < 0.75) {
+										setcolor = '#FF0000';
+									} else {
+										setcolor = '#8B0000';
 									}
-								},
-								failure: function(response,opts) {
-									console.log("更新数据失败");
+									data.push({
+										name: '空闲内存',
+										y: 1 - tmp.mem,
+										color: '#0059A7'
+									}, {
+										name: '使用内存',
+										y: tmp.mem,
+										color: setcolor
+									});
+									series.setData(data, true);
+								}else{
+									var series = cpu1.series[0];
+									series.addPoint([time, 0], true, true);
+									series = cpu2.series[0];
+									series.addPoint([time, 0], true, true);
+									console.log("无数据");
+									time+=1000;
 								}
-							});
+							},
+							failure: function(response, opts) {
+								var series = cpu1.series[0];
+								series.addPoint([time, 0], true, true);
+								series = cpu2.series[0];
+								series.addPoint([time, 0], true, true);
+								console.log("更新数据失败");
+								time+=1000;
+							}
+						});
 					}, 1000);
 
 			});
 
 	});
-		
+
 })();

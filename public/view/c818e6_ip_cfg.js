@@ -112,6 +112,7 @@ var state=true;//跳转状态
 												handler : function() {
 													this.up('form').getForm().reset();
 													this.up('form').initFormData();
+													Ext.getCmp('form_button_save').setDisabled(false);
 													state=true;
 												}
 											},
@@ -125,6 +126,7 @@ var state=true;//跳转状态
 													if (cfg.loadDefault&& Ext.isFunction(cfg.loadDefault)) {
 														try {
 															cfg.loadDefault(this.up("form").getForm());
+															Ext.getCmp('form_button_save').setDisabled(false);
 														} catch (e) {
 															console.log(e);
 														}
@@ -203,7 +205,7 @@ var state=true;//跳转状态
 										}else{
 											c.setDisabled(true);
 											var obj = Ext.getCmp("form_ip_netmask");
-											obj.markInvalid([{field : 'address',message : '子网掩码不合法.'}]);
+											obj.markInvalid([{field : 'netmask',message : '子网掩码不合法.'}]);
 										}
 									}
 								}

@@ -12,7 +12,12 @@ html:-moz-full-screen {
 }  
 html:-webkit-full-screen {  
    background: #0354A0;
-}  
+} 
+html:-ms-fullscreen {
+	background:  #0354A0;
+	width: 100%;
+	/* needed to center contents in IE */
+} 
 html:fullscreen {  
     background: #0354A0;
 }
@@ -87,14 +92,11 @@ body{
 }
 
 .header-west-panel {
-	top: 10px ! important;
-	height: 35px ! important;
+	top: 6px ! important;
+	height: 50px ! important;
 	left: 30px !important;
-	background-position: 100% 100%;
 	background-image: url('../img/logo.png');
 	background-repeat: no-repeat;
-	-moz-background-size: 100% 100%;
-	background-size: 100% 100%;
 }
 
 .header-east-panel {
@@ -102,7 +104,9 @@ body{
 	padding-bottom: 30px !important;
 	background-repeat: no-repeat;
 }
-
+.x-btn-over {
+	border-color: #022896;
+}
 .main-login-menu1 {
 	border-bottom-left-radius: 20px;
 	background-image: url('../img/login_menu1.png');
@@ -545,7 +549,4 @@ body{
 	background-image: url(../img/user_edit.png);
 	background-repeat: no-repeat;
 	background-position: 0 0;
-}*/
-/*.x-btn-button span{
-	font-weight: 900 !important;
 }*/

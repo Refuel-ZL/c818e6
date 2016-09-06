@@ -153,8 +153,7 @@ app.post('/save', function(req, res, next) {
 				var id = parseInt(req.body.id);
 				switch (id) {
 				case actionType.MODIFY_PASSWORD:
-					status = conf.modifyUserPassword(req.session.user.username,
-							cfg);
+					status = conf.modifyUserPassword(req.session.user.username,cfg);
 					break;
 				case actionType.MODIFY_IPADDRESS:
 					status = conf.updateIpConf(cfg);

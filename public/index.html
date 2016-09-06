@@ -11,49 +11,16 @@
 		<script type="text/javascript" src="framework/jquery/jquery-3.0.0.min.js"></script>
 		<script type="text/javascript" src="framework/highcharts/highcharts.js"></script>
 		<script type="text/javascript" src="control/indexjs.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 			var i = 0;
 			document.onkeyup = function() {
 				var IEKey = event.keyCode;　　
-				if(IEKey == 76) {　　
-					i++;　　
-					document.body.style.zoom = 1 + i / 10;　　
-					document.body.style.cssText += '; -moz-transform: scale(' + 1 + i / 10 + ');-moz-transform-origin: 0 0; '; //
-					console.log(detectZoom());
-				}　　
-				if(IEKey == 83) {　　
-					i--;　　
-					document.body.style.zoom = 1 + i / 10;　　
-					document.body.style.cssText += '; -moz-transform: scale(' + 1 + i / 10 + ');-moz-transform-origin: 0 0; '; //
-					console.log(detectZoom());
-				}　　
-				if(IEKey == 82) {　　
-					document.body.style.zoom = 1;　　
-					document.body.style.cssText += '; -moz-transform: scale(' + 1 + ');-moz-transform-origin: 0 0; '; //
-					i = 1;　　
-					console.log(detectZoom());
+				if(IEKey == 122) {　
+					fullScreen("fullScreen");
+					return;
 				}
 			}
-
-			function detectZoom() {
-				var ratio = 0,
-					screen = window.screen,
-					ua = navigator.userAgent.toLowerCase();
-				if(window.devicePixelRatio !== undefined) {
-					ratio = window.devicePixelRatio;
-				} else if(~ua.indexOf('msie')) {
-					if(screen.deviceXDPI && screen.logicalXDPI) {
-						ratio = screen.deviceXDPI / screen.logicalXDPI;
-					}
-				} else if(window.outerWidth !== undefined && window.innerWidth !== undefined) {
-					ratio = window.outerWidth / window.innerWidth;
-				}
-				if(ratio) {
-					ratio = Math.round(ratio * 100);
-				}
-				return ratio;
-			};
-		</script>
+	</script>
 	</head>
 
 	<body>
