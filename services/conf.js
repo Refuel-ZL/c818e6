@@ -14,16 +14,17 @@ function conf() {
 	}
 	var obj = {
 		restart : function() {
-			var exec = require('child_process').execSync;
+			//var exec = require('child_process').execSync;
+			var exec = require('child_process').exe;
 			try {
 				var cmd=null;
 				if(os.platform() == 'linux'){
-					cmd="init 6";
+					cmd="sleep 3 && shutdown -r now &";
 				}else{
 					cmd="cmd /c shutdown -r -t 0";
 				}
 				var str=exec(cmd, {
-					timeout : 1000,
+					//timeout : 1000,
 					encoding : 'utf-8'
 				});
 				if(str){

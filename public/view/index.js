@@ -238,33 +238,34 @@ var viewport = null; // 代表浏览器窗口的整个区域
 												 if(jsonobject.status == 1){
 													 Ext.Msg.wait('正在尝试重新连接。。。。。',"重启成功"); 
 													 var n=0;
-													 var timer1=setInterval(
-													 	function () {
-													 	if(n>=6){
-													 		clearInterval(timer1);
-													 		Ext.Msg.hide();
-													 		Ext.Msg.alert("错误","重连超时！，请确认设备是否运行正常"); 
-													 	}
-													 	Ext.Ajax.request({
-																url: url,
-																method: 'GET',
-																success: function(response, opts) {
-																	console.log("重启成功");
-																	Ext.Msg.hide();
-																	clearInterval(timer1);
-																	top.location.href=url;
-																},
-																failure: function(response, opts) {
-																	n++;
-																	console.log("尝试重新连接");
-															    }
-														});
+													 var timer1=setTimeout(function myFunction() {
+																 	if(n>=6){
+																 		Ext.Msg.hide();
+																 		Ext.Msg.alert("错误","重连超时！，请确认设备是否运行正常"); 
+																 	}
+																 	Ext.Ajax.request({
+																			url: url,
+																			method: 'GET',
+																			success: function(response, opts) {
+																				console.log("重启成功");
+																				Ext.Msg.hide();
+																				clearInterval(timer1);
+																				window.location.reload(); 
+																			},
+																			failure: function(response, opts) {
+																				n++;
+																				console.log("尝试重新连接");
+																		    }
+																	});
 													 },5000);
 												}else{
 													Ext.Msg.alert("错误","重启失败"); 
 												}
 											}
+										}else{
+											Ext.Msg.alert("错误","重启失败"); 
 										}
+										
 									}
 								});
 							}
@@ -701,13 +702,13 @@ var viewport = null; // 代表浏览器窗口的整个区域
 				//innerSize:'50%',
 				data: [{
 					name: '空闲内存',
-					y: 1,
+					y: 3,
 					color: '#0059A7',
 					//sliced: true
 					selected: true
 				}, {
 					name: '使用内存',
-					y: 1,
+					y: 7,
 					color: 'red',
 					//sliced: true,
 					selected: true
