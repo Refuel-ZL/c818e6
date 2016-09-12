@@ -147,7 +147,11 @@ var state=true;
 								},
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 									}
 								}
 							}, {
@@ -198,7 +202,11 @@ var state=true;
 								}),
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 									}
 								}
 							}, {
@@ -228,7 +236,11 @@ var state=true;
 								}),
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 									}
 								}
 							}, {
@@ -258,7 +270,11 @@ var state=true;
 								}),
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 									}
 								}
 							}, {
@@ -282,7 +298,11 @@ var state=true;
 								}),
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 									}
 								}
 							} ];

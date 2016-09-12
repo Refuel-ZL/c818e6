@@ -146,11 +146,22 @@ var state=true;//跳转状态
    							    msgTarget:'qtip',
 								allowBlank : false,
 								enableKeyEvents : true,
-								listeners : {
+								listeners : {//失去焦点
 									'blur':function(v) {
 										var a=v.lastValue;
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 										if (judge_ip(a)) {
+											console.log(a);
+											console.log(_ip);
+//											var u_ip =window.location.host.split(":");
+//											if（!judge_ip(judge_ip)){
+//												u_ip='192.168.1.1';
+//											}
+//											console.log(u_ip[0]);&&a!=u_ip[0]
 											if(_ip!=a){
 												Ext.Ajax.request({
 													url : '/validate',
@@ -168,7 +179,7 @@ var state=true;//跳转状态
 															if (c) {
 																c.setDisabled(jsonobject.status == 1);
 															}
-															if (obj) {
+															if (obj){
 																if (jsonobject.status == 1) {
 																	obj.markInvalid([{field : 'address',message : 'IP地址冲突,已经被使用.'}]);
 																	console.log(a+" IP地址,已经被使用.");
@@ -197,7 +208,11 @@ var state=true;//跳转状态
 								enableKeyEvents : true,
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;//修改了表单
+										}else{
+											state=true;
+										}
 										var c = Ext.getCmp('form_button_save');
 										var a=v.lastValue;
 										if (judge_ip(a)){
@@ -218,7 +233,11 @@ var state=true;//跳转状态
 								enableKeyEvents : true,
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 										var c = Ext.getCmp('form_button_save');
 										var a=v.lastValue;
 										if (judge_ip(a)){
@@ -237,7 +256,11 @@ var state=true;//跳转状态
 								id:'form_ip_dns1',
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 										var c = Ext.getCmp('form_button_save');
 										var a=v.lastValue;
 										if(a!=''){
@@ -258,7 +281,11 @@ var state=true;//跳转状态
 								id:'form_ip_dns2',
 								listeners : {
 									'blur':function(v) {
-										state=false;
+										if(this.up("form").getForm().isDirty()){
+											state=false;
+										}else{
+											state=true;
+										}
 										var c = Ext.getCmp('form_button_save');
 										var a=v.lastValue;
 										if(a!=''){
