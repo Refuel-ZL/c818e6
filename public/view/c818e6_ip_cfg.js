@@ -51,7 +51,7 @@ var state=true;//跳转状态
 													success : function(response, opts) {
 														var jsonobject = Ext.util.JSON.decode(response.responseText);
 														_ip=jsonobject.address;
-														console.log("原ip："+_ip);
+														// console.log("原ip："+_ip);
 														if (jsonobject) {
 															var obj = Ext.getCmp("ip_config");
 															if (obj) {

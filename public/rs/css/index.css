@@ -186,7 +186,6 @@ body{
 }
 
 .below_west {
-	width: 425px;
 	background-image: url(../img/C818E6_08.png);
 	background-repeat: no-repeat;
 	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
@@ -205,7 +204,6 @@ body{
 }
 
 .below_east {
-	width: 425px;
 	background-image: url(../img/C818E6_10.png);
 	background-repeat: no-repeat;
 	filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\')";
@@ -331,7 +329,7 @@ body{
 #page a div span {
 	font-weight: bold;
 	font-family: "KaiTi,Microsoft YaHei";
-	font-size: 16px;
+	font-size: 14px;
 	color: #FFFFFF;
 }
 
@@ -531,6 +529,17 @@ body{
 	background: transparent !important;
 }
 
+#c818_version {
+	position: absolute;
+    right: 10px;
+    bottom: 5px;
+    margin: 0;
+    padding: 0;
+	
+}
+#c818_version span{
+	font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+}
 /*.main-menu3-icon{
 	
 }
