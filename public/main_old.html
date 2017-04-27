@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=IE6,chrome=1" />
+    <title>C818E6</title>
+    <link rel="stylesheet" type="text/css" href="framework/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="framework/easyui/themes/icon.css">
+    <script type="text/javascript" src="framework/jquery/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="framework/easyui/jquery.easyui.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="framework/jquery/json2.js"></script>
+<![endif]-->
+    <script type="text/javascript">
+        String.prototype.format = function(args) {
+            if (arguments.length > 0) {
+                var result = this;
+                if (arguments.length == 1 && typeof(args) == "object") {
+                    for (var key in args) {
+                        var reg = new RegExp("({" + key + "})", "g");
+                        result = result.replace(reg, args[key]);
+                    }
+                } else {
+                    for (var i = 0; i < arguments.length; i++) {
+                        if (arguments[i] == undefined) {
+                            return "";
+                        } else {　
+                            var reg = new RegExp("({)" + i + "(})", "g");
+                            result = result.replace(reg, arguments[i]);
+                        }
+                    }
+                }
+                return result;
+            } else {
+                return this;
+            }
+        }
+    </script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div style="margin: 50px auto;width:800px;border: none;min-height:500px">
+        <p style="text-align:center;font-size:32px ">C818E6配置</p>
+        <div style="text-align:right;height:32px">
+            <a href="#" class="easyui-linkbutton" id="login" onclick="showloginwin()">登录</a>
+            <a href="#" class="easyui-linkbutton" id="reboot" data-options="disabled:true" onclick="reboot()">重启</a>
+        </div>
+        <div id="config" class="easyui-panel" style="height:400px;width:800px;margin:0 auto;border: none;text-align: center;overflow-x: hidden;" buttons="#config_buttons">
+            <div id="alltabs" class="easyui-tabs" style="width:800px;height:350px;border: none;">
+                <div title="IP设置">
+                    <p style="line-height: 32px;font-size: 20px;text-align: center;">网络配置</p>
+                    <form id="ff" method="post" style="margin: 0 auto;width: 300px;">
+                        <table id="tb0">
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">IP地址:</td>
+                                <td width="200"><input class="easyui-textbox" type="text" onblur="chkvalue(this.value)" name="address" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">子网掩码:</td>
+                                <td><input class="easyui-textbox" type="text" name="netmask" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">默认网关:</td>
+                                <td><input class="easyui-textbox" type="text" name="gateway" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">首选DNS:</td>
+                                <td><input class="easyui-textbox" type="text" name="dns1" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">备用DNS:</td>
+                                <td><input class="easyui-textbox" type="text" name="dns2" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
+                </div>
+                <div title="串口1">
+                    <p style="line-height: 32px;font-size: 20px;text-align: center;">串口1配置</p>
+                    <form id="ck1" method="post" style="margin: 0 auto;width: 300px;">
+                        <table id="tb1">
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">端口:</td>
+                                <td width="200"><input class="easyui-numberbox" type="text" name="port" data-options="" value="27011" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">波特率:</td>
+                                <td><input class="easyui-combobox" type="text" name="baud_rate" data-options="valueField:'id',textField:'text',data:[{id:9600,text:'9600'},{id:300,text:'300'},{id:600,text:'600'},{id:1200,text:'1200'},{id:1800,text:'1800'},{id:2400,text:'2400'},{id:4800,text:'4800'},{id:19200,text:'19200'},{id:38400,text:'38400'},{id:115200,text:'115200'}],value:9600,editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">数据位:</td>
+                                <td><input class="easyui-combobox" type="text" name="data_bits" data-options="valueField:'id',textField:'text',data:[{id:5,text:'5'},{id:6,text:'6'},{id:7,text:'7'},{id:8,text:'8'}],value:8,editable:false" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">校验方式:</td>
+                                <td><input class="easyui-combobox" type="text" name="parity" data-options="valueField:'id',textField:'text',data:[{id:'n',text:'none'},{id:'o',text:'ODD'},{id:'e',text:'EVEN'},{id:'s',text:'SPACE'}],value:'n',editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">停止位:</td>
+                                <td><input class="easyui-combobox" type="text" name="stop_bits" data-options="valueField:'id',textField:'text',data:[{id:1,text:'1'},{id:2,text:'2'}],value:1,editable:false" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
+                </div>
+                <div title="串口2">
+                    <p style="line-height: 32px;font-size: 20px;text-align: center;">串口2配置</p>
+                    <form id="ck2" method="post" style="margin: 0 auto;width: 300px;">
+                        <table id="tb2">
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">端口:</td>
+                                <td width="200"><input class="easyui-validatebox" type="text" name="port" data-options="" value="27011" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">波特率:</td>
+                                <td><input class="easyui-combobox" type="text" name="baud_rate" data-options="valueField:'id',textField:'text',data:[{id:9600,text:'9600'},{id:300,text:'300'},{id:600,text:'600'},{id:1200,text:'1200'},{id:1800,text:'1800'},{id:2400,text:'2400'},{id:4800,text:'4800'},{id:19200,text:'19200'},{id:38400,text:'38400'},{id:115200,text:'115200'}],value:9600,editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">数据位:</td>
+                                <td><input class="easyui-combobox" type="text" name="data_bits" data-options="valueField:'id',textField:'text',data:[{id:5,text:'5'},{id:6,text:'6'},{id:7,text:'7'},{id:8,text:'8'}],value:5,editable:false" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">校验方式:</td>
+                                <td><input class="easyui-combobox" type="text" name="parity" data-options="valueField:'id',textField:'text',data:[{id:'n',text:'none'},{id:'o',text:'ODD'},{id:'e',text:'EVEN'},{id:'s',text:'SPACE'}],value:'n',editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">停止位:</td>
+                                <td><input class="easyui-combobox" type="text" name="stop_bits" data-options="valueField:'id',textField:'text',data:[{id:1,text:'1'},{id:2,text:'2'}],value:1,editable:false" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div title="串口3">
+                    <p style="line-height: 32px;font-size: 20px;text-align: center;">串口3配置</p>
+                    <form id="ck3" method="post" style="margin: 0 auto;width: 300px;">
+                        <table id="tb3">
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">端口:</td>
+                                <td width="200"><input class="easyui-validatebox" type="text" name="port" data-options="" value="27011" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">波特率:</td>
+                                <td><input class="easyui-combobox" type="text" name="baud_rate" data-options="valueField:'id',textField:'text',data:[{id:9600,text:'9600'},{id:300,text:'300'},{id:600,text:'600'},{id:1200,text:'1200'},{id:1800,text:'1800'},{id:2400,text:'2400'},{id:4800,text:'4800'},{id:19200,text:'19200'},{id:38400,text:'38400'},{id:115200,text:'115200'}],value:9600,editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">数据位:</td>
+                                <td><input class="easyui-combobox" type="text" name="data_bits" data-options="valueField:'id',textField:'text',data:[{id:5,text:'5'},{id:6,text:'6'},{id:7,text:'7'},{id:8,text:'8'}],value:5,editable:false" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">校验方式:</td>
+                                <td><input class="easyui-combobox" type="text" name="parity" data-options="valueField:'id',textField:'text',data:[{id:'n',text:'none'},{id:'o',text:'ODD'},{id:'e',text:'EVEN'},{id:'s',text:'SPACE'}],value:'n',editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">停止位:</td>
+                                <td><input class="easyui-combobox" type="text" name="stop_bits" data-options="valueField:'id',textField:'text',data:[{id:1,text:'1'},{id:2,text:'2'}],value:1,editable:false" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
+                </div>
+                <div title="串口4">
+                    <p style="line-height: 32px;font-size: 20px;text-align: center;">串口4配置</p>
+                    <form id="ck4" method="post" style="margin: 0 auto;width: 300px;">
+                        <table id="tb4">
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">端口:</td>
+                                <td width="200"><input class="easyui-validatebox" type="text" name="port" data-options="" value="27011" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">波特率:</td>
+                                <td><input class="easyui-combobox" type="text" name="baud_rate" data-options="valueField:'id',textField:'text',data:[{id:9600,text:'9600'},{id:300,text:'300'},{id:600,text:'600'},{id:1200,text:'1200'},{id:1800,text:'1800'},{id:2400,text:'2400'},{id:4800,text:'4800'},{id:19200,text:'19200'},{id:38400,text:'38400'},{id:115200,text:'115200'}],value:9600,editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">数据位:</td>
+                                <td><input class="easyui-combobox" type="text" name="data_bits" data-options="valueField:'id',textField:'text',data:[{id:5,text:'5'},{id:6,text:'6'},{id:7,text:'7'},{id:8,text:'8'}],value:5,editable:false" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">校验方式:</td>
+                                <td><input class="easyui-combobox" type="text" name="parity" data-options="valueField:'id',textField:'text',data:[{id:'n',text:'none'},{id:'o',text:'ODD'},{id:'e',text:'EVEN'},{id:'s',text:'SPACE'}],value:'n',editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">停止位:</td>
+                                <td><input class="easyui-combobox" type="text" name="stop_bits" data-options="valueField:'id',textField:'text',data:[{id:1,text:'1'},{id:2,text:'2'}],value:1,editable:false" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
+                </div>
+                <div title="串口5">
+                    <p style="line-height: 32px;font-size: 20px;text-align: center;">串口5配置</p>
+                    <form id="ck5" method="post" style="margin: 0 auto;width: 300px;">
+                        <table id="tb5">
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">端口:</td>
+                                <td width="200"><input class="easyui-validatebox" type="text" name="port" data-options="" value="27011" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">波特率:</td>
+                                <td><input class="easyui-combobox" type="text" name="baud_rate" data-options="valueField:'id',textField:'text',data:[{id:9600,text:'9600'},{id:300,text:'300'},{id:600,text:'600'},{id:1200,text:'1200'},{id:1800,text:'1800'},{id:2400,text:'2400'},{id:4800,text:'4800'},{id:19200,text:'19200'},{id:38400,text:'38400'},{id:115200,text:'115200'}],value:9600,editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">数据位:</td>
+                                <td><input class="easyui-combobox" type="text" name="data_bits" data-options="valueField:'id',textField:'text',data:[{id:5,text:'5'},{id:6,text:'6'},{id:7,text:'7'},{id:8,text:'8'}],value:5,editable:false" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">校验方式:</td>
+                                <td><input class="easyui-combobox" type="text" name="parity" data-options="valueField:'id',textField:'text',data:[{id:'n',text:'none'},{id:'o',text:'ODD'},{id:'e',text:'EVEN'},{id:'s',text:'SPACE'}],value:'n',editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">停止位:</td>
+                                <td><input class="easyui-combobox" type="text" name="stop_bits" data-options="valueField:'id',textField:'text',data:[{id:1,text:'1'},{id:2,text:'2'}],value:1,editable:false" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div title="串口6">
+                    <p style="line-height: 32px;font-size: 20px;text-align: center;">串口6配置</p>
+                    <form id="ck6" method="post" style="margin: 0 auto;width: 300px;">
+                        <table id="tb6">
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">端口:</td>
+                                <td width="200"><input class="easyui-validatebox" type="text" name="port" data-options="" value="27011" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">波特率:</td>
+                                <td><input class="easyui-combobox" type="text" name="baud_rate" data-options="valueField:'id',textField:'text',data:[{id:9600,text:'9600'},{id:300,text:'300'},{id:600,text:'600'},{id:1200,text:'1200'},{id:1800,text:'1800'},{id:2400,text:'2400'},{id:4800,text:'4800'},{id:19200,text:'19200'},{id:38400,text:'38400'},{id:115200,text:'115200'}],value:9600,editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">数据位:</td>
+                                <td><input class="easyui-combobox" type="text" name="data_bits" data-options="valueField:'id',textField:'text',data:[{id:5,text:'5'},{id:6,text:'6'},{id:7,text:'7'},{id:8,text:'8'}],value:5,editable:false" />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">校验方式:</td>
+                                <td><input class="easyui-combobox" type="text" name="parity" data-options="valueField:'id',textField:'text',data:[{id:'n',text:'none'},{id:'o',text:'ODD'},{id:'e',text:'EVEN'},{id:'s',text:'SPACE'}],value:'n',editable:false"
+                                    />
+                                </td>
+                            </tr>
+                            <tr height="32px">
+                                <td width="100" style="text-align: right;">停止位:</td>
+                                <td><input class="easyui-combobox" type="text" name="stop_bits" data-options="valueField:'id',textField:'text',data:[{id:1,text:'1'},{id:2,text:'2'}],value:1,editable:false" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div id="config_buttons" style="padding-top: 5px;margin-left: 150px;">
+                <a style="margin-right: 5px;" href="javascript:void(0)" class="easyui-linkbutton" id="submit">立即生效</a>
+                <a style="margin-left: 5px;margin-right: 5px;" href="javascript:void(0)" class="easyui-linkbutton" id="clear">放弃修改</a>
+                <a style="margin-left: 5px;" href="javascript:void(0)" class="easyui-linkbutton" id="reset">恢复默认</a>
+            </div>
+        </div>
+    </div>
+    <p id="c818_version" style="text-align: center;font:12px arial;">©2017 consenwell &nbsp;&nbsp;<span>1.0.0</span></p>
+
+    <div id="user-login-win"></div>
+    <script type="text/javascript">
+        var loginstatus = 0;
+        var status = "";
+        var ipstatus = "";
+        var _ip = "";
+
+        function submitForm() {
+            var data = "";
+            var datas = {};
+            var ids = getids();
+            //校验
+            // session
+            if (loginstatus == 0) {
+                showloginwin();
+                status = true;
+                return;
+            }
+            status = "";
+            try {
+                if (ids.index == 0) {
+                    data = getwangluo();
+                    if (data.message) {
+                        winshow('网络配置错误', data.message);
+                        return;
+                    }
+                    postwl(data);
+                } else {
+                    data = getchuankou(ids.id);
+                    if (data.message) {
+                        winshow('串口配置错误', data.message);
+                        return;
+                    }
+                    postck(data, ids.index - 1);
+                }
+            } catch (error) {
+                winshow('错误', error);
+            }
+        }
+
+        function clearForm() {
+            var ids = getids();
+            if (ids.index > 0) {
+                initSportData(ids.index - 1)
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/load",
+                    async: true,
+                    dataType: 'json',
+                    data: {
+                        id: 4
+                    },
+                    success: function(data) {
+                        try {
+                            $('#ff').form('load', data);
+                        } catch (e) {
+
+                        }
+                    }
+                })
+            }
+        }
+
+        function reset() {
+            var ids = getids();
+            if (ids.index > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "/loadDefault",
+                    async: true,
+                    dataType: 'json',
+                    data: {
+                        id: 5,
+                        port: ids.index - 1
+                    },
+                    success: function(data) {
+                        try {
+                            $('#ck' + ids.index).form('load', data);
+
+                        } catch (e) {
+                            winshow('错误', e);
+                        }
+                    }
+                })
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/loadDefault",
+                    async: true,
+                    dataType: 'json',
+                    data: {
+                        id: 4
+                    },
+                    success: function(data) {
+                        try {
+                            $('#ff').form('load', data);
+                        } catch (e) {
+                            winshow('错误', e);
+                        }
+                    }
+                })
+            }
+        }
+
+        function showloginwin() {
+            if (loginstatus == 0) {
+                re = "请先登录"
+            } else {
+                re = "请牢记密码"
+            }
+            var item = "<div  style=\"width:200px;height:120px;padding:10px 40px 0px 40px;\"><form><p style=\"text-align:center\">" + re + "</p><p>{0}</p><p>{1} <input type=\"password\" name=\"password\" id=\"password\"></p></form><p style=\"text-align:center\">  <a href=\"#\" class=\"easyui-linkbutton\"  onclick={2}>{3}</a></p></div>";
+            if (loginstatus == 0) {
+                item = item.format("账号： <input type=\"text\" id=\"username\"  disabled=\"disabled\"  name=\"username\" value=\"admin\">", "密码：", "login()", "登录");
+            } else {
+                item = item.format("旧密码： <input type=\"password\" id=\"username\" name=\"username\"> ", "新密码：", "modify()", "改密码");
+            }
+            $('#user-login-win').dialog({
+                title: '',
+                width: 300,
+                height: 200,
+                resizable: false,
+                closed: false,
+                cache: false,
+                modal: true,
+                content: item
+            });
+        }
+
+        function login() {
+            $.ajax({
+                url: "/login",
+                data: {
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value
+                },
+                type: "POST",
+                success: function(vl) {
+                    if (vl && vl.status == 1) {
+                        $('#user-login-win').dialog("close")
+                        loginstatus = 1;
+                        $("#login .l-btn-text").each(function() {
+                            var myvalue = '改密码';
+                            $(this).html(myvalue);
+                        });
+                        winshow('提示', "登陆成功");
+                        $("#reboot").linkbutton({
+                            disabled: false
+                        });
+                        if (status) {
+                            submitForm()
+                        }
+                    } else {
+                        winshow('提示', "登陆失败");
+                    }
+
+                },
+                error: function(er) {
+                    winshow('错误', er);
+                }
+            });
+        }
+
+        function reboot() {
+            $.ajax({
+                url: "/restart",
+                type: "POST",
+                success: function(vl) {
+                    if (vl && vl.status == 1) {
+                        var url = document.URL;
+                        $('#user-login-win').dialog({
+                            title: '',
+                            width: 300,
+                            height: 200,
+                            resizable: false,
+                            closed: false,
+                            cache: false,
+                            modal: true,
+                            content: '<p style="text-align:center;padding:20px">提示: 10S尝试重新链接: ' + url + '.</p><div id="skip-win"></div>'
+                        });
+                        var t = 0;
+                        setInterval(function() {
+                            var n = t + 10;
+                            $("#skip-win").progressbar({
+                                value: n
+                            });
+                            t = n;
+                        }, 1000);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 10000);
+                    } else if (vl.status == -1) {
+                        winshow('提示', "请先登陆");
+                        showloginwin();
+                    } else {
+                        winshow('提示', "重启失败");
+                    }
+
+                },
+                error: function(er) {
+                    winshow('错误', er);
+                }
+            });
+        }
+
+        function modify() {
+            var datas = {
+                oldpassword: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            }
+            $.ajax({
+                url: "/save",
+                type: "POST",
+                data: {
+                    "id": 0,
+                    "data": JSON.stringify(datas)
+                },
+                dataType: 'json',
+                success: function(vl) {
+                    if (vl && vl.status == 1) {
+                        $('#user-login-win').dialog("close")
+                        winshow('提示', "修改成功");
+                    } else {
+                        winshow('提示', "保存失败");
+                    }
+                },
+                error: function(er) {
+                    winshow('错误', er);
+                }
+            });
+        }
+
+        function getids() {
+            var id = "ck{0}";
+            var tab = $('#alltabs').tabs('getSelected');
+            var index = $('#alltabs').tabs('getTabIndex', tab);
+            if (index == 0) {
+                id = "ff";
+            } else if (index >= 1 && index <= 6) {
+                id = id.format(index);
+            } else {
+                return;
+            }
+            return {
+                "id": id,
+                "index": index
+            };
+        }
+
+        function getwangluo() {
+            var address = document.getElementsByName("address")[0].value;
+            var netmask = document.getElementsByName("netmask")[0].value;
+            var gateway = document.getElementsByName("gateway")[0].value;
+            var dns1 = document.getElementsByName("dns1")[0].value;
+            var dns2 = document.getElementsByName("dns2")[0].value;
+
+            if (!ip(address)) {
+                return {
+                    message: "IP地址:	不合格"
+                }
+            }
+            if (!ip(netmask)) {
+                return {
+                    message: "子网掩码:	不合格"
+                }
+
+            }
+            if (!ip(gateway)) {
+                return {
+                    message: "网关地址:	不合格"
+                }
+            }
+            if (dns1.length > 0 && !ip(dns1)) {
+                return {
+                    message: "DNS地址:不合格"
+                }
+            }
+            if (dns2.length > 0 && !ip(dns2)) {
+                return {
+                    message: "DNS地址:不合格"
+                }
+            }
+            if (!ipstatus && address != _ip) {
+                return {
+                    message: "IP地址：冲突"
+                }
+
+
+            }
+            return {
+                "address": address,
+                "netmask": netmask,
+                "gateway": gateway,
+                "dns1": dns1,
+                "dns2": dns2
+            }
+        }
+
+        function getchuankou(id) {
+            var data = [];
+            var list = document.getElementById(id).getElementsByTagName("input");
+            for (var i = 0; i < list.length && list[i] != null; i++) {
+                if (list[i].name) {
+                    data[list[i].name] = list[i].value;
+                }
+            }
+            if (!port(data["port"])) {
+                return {
+                    message: "端口号:	不合格"
+                }
+            }
+            return {
+                "port": data["port"],
+                "baud_rate": data["baud_rate"],
+                "data_bits": data["data_bits"],
+                "parity": data["parity"],
+                "stop_bits": data["stop_bits"]
+            }
+        }
+
+        function postwl(data) {
+
+            $.ajax({
+                url: "/save",
+                data: {
+                    id: 1,
+                    data: JSON.stringify(data)
+                },
+                type: "POST",
+                dataType: 'json',
+                success: function(vl) {
+                    if (vl.status == 1) {
+                        var url = "http://" + data.address
+                        if (window.location.port) {
+                            url += ":" + window.location.port + "/";
+                        }
+                        $('#user-login-win').dialog({
+                            title: '',
+                            width: 300,
+                            height: 200,
+                            resizable: false,
+                            closed: false,
+                            cache: false,
+                            modal: true,
+                            content: '<p style="text-align:center;padding:20px">提示: 5S后跳转网页: ' + url + '.</p><div id="skip-win"></div>'
+                        });
+                        var t = 0;
+                        setInterval(function() {
+                            var n = t + 10;
+                            $("#skip-win").progressbar({
+                                value: n
+                            });
+                            t = n;
+                        }, 500);
+                        setTimeout(function() {
+                            top.location.href = url;
+                        }, 5000);
+                    } else {
+                        winshow('提示', "保存失败");
+                    }
+
+
+                },
+                error: function(er) {
+                    winshow('错误', er);
+                }
+            });
+        }
+
+        function postck(data, i) {
+            $.ajax({
+                url: "/save",
+                data: {
+                    "id": 2,
+                    "index": i,
+                    "port": data.port,
+                    "data": JSON.stringify(data)
+                },
+                type: "POST",
+                dataType: 'json',
+                success: function(vl) {
+                    if (vl.status == 1) {
+                        winshow('提示', "保存成功");
+                    } else {
+                        winshow('提示', "保存失败");
+                    }
+                },
+                error: function(er) {
+                    winshow('保存{0}错误'.format(i), er);
+                }
+            });
+        }
+
+        function chkvalue(ip) {
+            if (ip == _ip) {
+                return ipstatus = true;
+            }
+            $.ajax({
+                url: "/validate",
+                data: {
+                    address: ip
+                },
+                type: "POST",
+                async: false,
+                success: function(vl) {
+                    if (vl.status == 1) {
+                        winshow('提示', "IP冲突");
+                        return ipstatus = "";
+                    } else {
+                        return ipstatus = true;
+                    }
+
+                },
+                error: function(er) {
+                    winshow('错误', er);
+                    return ipstatus = "";
+                }
+            });
+
+        }
+
+        function ip(ip) {
+            var re = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+            return re.test(ip);
+        }
+
+        function port(port) {
+            var re = /^([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])$/;
+            return re.test(port);
+        }
+
+        function initFormData() {
+            $.ajax({
+                type: "POST",
+                url: "/load",
+                // async: false,
+                dataType: 'json',
+                data: {
+                    id: 4
+                },
+                success: function(data) {
+                    try {
+                        $('#ff').form('load', data);
+                        _ip = data.address;
+                    } catch (e) {
+
+                    }
+                    for (var j = 0; j < 6; j++) {
+                        initSportData(j);
+                    }
+                }
+            });
+        }
+
+        function initSportData(i) {
+            try {
+                var id = "ck{0}".format(i + 1);
+                $.ajax({
+                    type: "POST",
+                    url: "/load",
+                    // async: true,
+                    dataType: 'json',
+                    data: {
+                        id: 5,
+                        port: i
+                    },
+                    success: function(data) {
+                        try {
+                            $('#' + id).form('load', data);
+                        } catch (e) {
+
+                        }
+                    }
+                });
+            } catch (e) {
+
+            }
+        }
+
+        function winshow(title, message) {
+            $.messager.show({
+                title: title,
+                msg: message,
+                showType: 'show'
+            });
+        }
+
+        $(function() {
+            $('#alltabs').tabs({
+                tabPosition: "left",
+                plain: true
+            })
+
+            //获取版本号
+            $.ajax({
+                url: '/v',
+                method: 'POST',
+                dataType: 'json',
+                success: function(response, opts) {
+                    $('#c818_version  > span').html(response.version);
+                },
+                error: function(er) {
+                    alert("获取版本号失败:" + er);
+                }
+            });
+            initFormData();
+            $("#submit").click(
+                function() {
+                    submitForm();
+                }
+            );
+            $("#clear").click(
+                function() {
+                    clearForm();
+                }
+            );
+            $("#reset").click(
+                function() {
+                    reset();
+                }
+            );
+
+        })
+    </script>
+</body>
+
+</html>

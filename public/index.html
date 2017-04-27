@@ -1,30 +1,81 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 
-	<head>
-		<meta charset="utf-8" />
-		<title>C818E6</title>
-		<script type="text/javascript" src="framework/extjs/include-ext.js?theme=classic"></script>
-		<!--<script type="text/javascript" src="framework/extjs/include-ext.js"></script>-->
-		<link rel="stylesheet" href="rs/css/index.css" type="text/css"></link>
-		<script type="text/javascript" src="view/index.js"></script>
-		<script type="text/javascript" src="framework/jquery/jquery-3.0.0.min.js"></script>
-		<script type="text/javascript" src="framework/highcharts/highcharts.js"></script>
-		<script type="text/javascript" src="control/indexjs.js"></script>
-	<script type="text/javascript">
-			var i = 0;
-			document.onkeyup = function() {
-				var IEKey = event.keyCode;　　
-				if(IEKey == 122) {　
-					fullScreen("fullScreen");
-					return;
-				}
-			}
-	</script>
-	</head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>C818E6</title>
+    <script type="text/javascript">
+        var BrowserType = function() {
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+            var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器  
+            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器  
+            var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器  
+            var isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器  
+            var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器  
+            var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器  
 
-	<body>
-		<div id="fullviewport"></div>
-	</body>
+            if (isIE) {
+                var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                reIE.test(userAgent);
+                var fIEVersion = parseFloat(RegExp["$1"]);
+                if (fIEVersion == 6) {
+                    return "IE6";
+                } else if (fIEVersion == 7) {
+                    return "IE7";
+                } else if (fIEVersion == 8) {
+                    return "IE8";
+                } else if (fIEVersion == 9) {
+                    return "IE9";
+                } else if (fIEVersion == 10) {
+                    return "IE10";
+                } else if (fIEVersion == 11) {
+                    return "IE11";
+                } else {
+                    return "IE"
+                } //IE版本过低  
+            }
+
+            if (isFF) {
+                return "FF";
+            }
+            if (isOpera) {
+                return "Opera";
+            }
+            if (isSafari) {
+                return "Safari";
+            }
+            if (isChrome) {
+                return "Chrome";
+            }
+            if (isEdge) {
+                return "Edge";
+            }
+        };
+        var url = "main.html";
+        try {
+            var browerType = BrowserType();
+            if (browerType) {
+                if (browerType.indexOf("IE") == 0) { //IE浏览器
+                    var ver = browerType.substring(2) || browerType.substr(2);
+                    try {
+                        var v = parseInt(ver);
+                        if (v <= 9) {
+                            url = "main_old.html";
+                        }
+                    } catch (ex) {
+                        url = "main_old.html";
+                    }
+                }
+            }
+            window.location.href = url;
+        } catch (e) {
+            url = "main_old.html";
+            window.location.href = url;
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
 
 </html>
