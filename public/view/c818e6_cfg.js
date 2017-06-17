@@ -137,13 +137,13 @@ var state = true;
                 xtype: 'textfield',
                 validator: function(val) {
                     var b = Ext.isNumeric(val) &&
-                        parseInt(val) > 0 &&
+                        parseInt(val) >= 10000 &&
                         parseInt(val) < 65536;
                     var obj = Ext.getCmp('form_port_submit');
                     if (obj) {
                         obj.setDisabled(!b);
                     }
-                    return b ? true : '端口值无效';
+                    return b ? true : '端口值无效(10000-65535)';
                 },
                 listeners: {
                     'blur': function(v) {
@@ -441,7 +441,8 @@ var state = true;
                             tmp['sindex'] = parseInt(page) - 2;
                             tmp['exName'] = 'b';
                             tmp['index'] = 27012;
-                            tmp['title'] = '串口（232-2）参数配置';
+                            tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',
+                                1);
                             var rt = buildserialport(tmp);
                             if (rt) {
                                 viewItem.push(rt);
@@ -456,7 +457,7 @@ var state = true;
                             tmp['exName'] = 'c';
                             tmp['index'] = 27013;
                             tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',
-                                1);
+                                2);
                             var rt = buildserialport(tmp);
                             if (rt) {
                                 viewItem.push(rt);
@@ -471,7 +472,7 @@ var state = true;
                             tmp['exName'] = 'd';
                             tmp['index'] = 27014;
                             tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',
-                                2);
+                                3);
                             var rt = buildserialport(tmp);
                             if (rt) {
                                 viewItem.push(rt);
@@ -486,7 +487,7 @@ var state = true;
                             tmp['exName'] = 'e';
                             tmp['index'] = 27015;
                             tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',
-                                3);
+                                4);
                             var rt = buildserialport(tmp);
                             if (rt) {
                                 viewItem.push(rt);
@@ -501,7 +502,7 @@ var state = true;
                             tmp['exName'] = 'f';
                             tmp['index'] = 27016;
                             tmp['title'] = Ext.String.format('串口（485-{0}）参数配置',
-                                4);
+                                5);
                             var rt = buildserialport(tmp);
                             if (rt) {
                                 viewItem.push(rt);

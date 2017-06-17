@@ -412,7 +412,7 @@
             } else {
                 re = "请牢记密码"
             }
-            var item = "<div  style=\"width:200px;height:120px;padding:10px 40px 0px 40px;\"><form><p style=\"text-align:center\">" + re + "</p><p>{0}</p><p>{1} <input type=\"password\" name=\"password\" id=\"password\"></p></form><p style=\"text-align:center\">  <a href=\"#\" class=\"easyui-linkbutton\"  onclick={2}>{3}</a></p></div>";
+            var item = "<div  style=\"width: 250px;height:120px;padding: 10px 10px 0px 25px;\"><form><p style=\"text-align:center\">" + re + "</p><p>{0}</p><p>{1} <input type=\"password\" name=\"password\" id=\"password\"></p></form><p style=\"text-align:center\">  <a href=\"#\" class=\"easyui-linkbutton\"  onclick={2}>{3}</a></p></div>";
             if (loginstatus == 0) {
                 item = item.format("账号： <input type=\"text\" id=\"username\"  disabled=\"disabled\"  name=\"username\" value=\"admin\">", "密码：", "login()", "登录");
             } else {

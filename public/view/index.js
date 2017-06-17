@@ -11,11 +11,11 @@ var viewport = null; // 代表浏览器窗口的整个区域
                 '<ul>' +
                 '<li><a href="#" class="active" alt="ip设置" title="ip设置"><div><span>ip</br>设置</span></div></a></li>' +
                 '<li><a href="#" alt="串口(232-1)" title="串口(232-1)"><div><span>串口</br>1</span></div></a></li>' +
-                '<li><a href="#" alt="串口(232-2)" title="串口(232-2)"><div><span>串口</br>2</span></div></a></li>' +
-                '<li><a href="#" alt="串口(485-1)" title="串口(485-1)"><div><span>串口</br>3</span></div></a></li>' +
-                '<li><a href="#" alt="串口(485-2)" title="串口(485-2)"><div><span>串口</br>4</span></div></a></li>' +
-                '<li><a href="#" alt="串口(485-3)" title="串口(485-3)"><div><span>串口</br>5</span></div></a></li>' +
-                '<li><a href="#" alt="串口(485-4)" title="串口(485-4)"><div><span>串口</br>6</span></div></a></li>' +
+                '<li><a href="#" alt="串口(485-1)" title="串口(485-1)"><div><span>串口</br>2</span></div></a></li>' +
+                '<li><a href="#" alt="串口(485-2)" title="串口(485-2)"><div><span>串口</br>3</span></div></a></li>' +
+                '<li><a href="#" alt="串口(485-3)" title="串口(485-3)"><div><span>串口</br>4</span></div></a></li>' +
+                '<li><a href="#" alt="串口(485-4)" title="串口(485-4)"><div><span>串口</br>5</span></div></a></li>' +
+                '<li><a href="#" alt="串口(485-5)" title="串口(485-5)"><div><span>串口</br>6</span></div></a></li>' +
                 '</ul>' +
                 '</div>' +
                 '<a  id="Right" class="a1" href="javascript:void(0)" onmousedown="moveRight()"></a>' +
@@ -260,12 +260,12 @@ var viewport = null; // 代表浏览器窗口的整个区域
                             }
                         }
                     }, {
-                        text: '返回旧版',
+                        text: '返回简易版',
                         xtype: 'panel',
                         cls: 'main-login-menu3',
                         width: 83,
                         height: 30,
-                        html: '<button type="button" id="jump"  onclick="jump()" onmouseout="this.style.backgroundColor=\'transparent\'"  onmouseover="this.style.backgroundColor=\'#b0ccf2\'">旧版</button>'
+                        html: '<button type="button" id="jump"  onclick="jump()" onmouseout="this.style.backgroundColor=\'transparent\'"  onmouseover="this.style.backgroundColor=\'#b0ccf2\'">简易版</button>'
                     }]
                 }]
             };
@@ -372,7 +372,6 @@ var viewport = null; // 代表浏览器窗口的整个区域
                                 var user = Ext.getCmp('textfiled_username').getValue();
                                 var pwd = Ext.getCmp('textfiled_password').getValue();
                                 var b = /^[A-Za-z0-9]{3,16}$/.test(pwd);
-                                console.log(b);
                                 if (b) {
                                     Ext.Ajax.request({
                                         url: mod ? '/save' : '/login',
