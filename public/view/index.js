@@ -629,7 +629,7 @@ var viewport = null; // 代表浏览器窗口的整个区域
                     // return '<b>' + this.point.name + '</b>: ' +
                     // Highcharts.numberFormat(this.percentage, 2) + '
                     // %';
-                    return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.y, 2) * 1024 + ' MB';
+                    return '<b>' + this.point.name + '</b>:　' + Highcharts.numberFormat(this.y, 2) * 1024 + ' MB';
                 }
             },
             plotOptions: {
@@ -729,20 +729,20 @@ var viewport = null; // 代表浏览器窗口的整个区域
                                 series = memory1.series[0];
                                 var data = [];
                                 var setcolor = '#0059A7';
-                                if (tmp.mem < 0.5) {
+                                if (tmp.mem > 0.5) {
                                     setcolor = '#FF6347';
-                                } else if (tmp.mem < 0.75) {
+                                } else if (tmp.mem > 0.75) {
                                     setcolor = '#FF0000';
                                 } else {
                                     setcolor = '#8B0000';
                                 }
                                 data.push({
                                     name: '空闲内存',
-                                    y: 1 - tmp.mem,
+                                    y: tmp.mem,
                                     color: '#0059A7'
                                 }, {
                                     name: '使用内存',
-                                    y: tmp.mem,
+                                    y: 1 - tmp.mem,
                                     color: setcolor
                                 });
                                 series.setData(data, true);
